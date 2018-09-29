@@ -7,12 +7,12 @@
     "type": "project",
     "support":
     {
-        "docs": "https://aethershell.readthedocs.io/en/latest",
+        "docs": "https://man.aether.sh",
         "email": "onx@nxsysts.com",
         "chat": "https://onx.zulipchat.com",
         "issues": "https://nxsys.assembla.com/spaces/aether/tickets",
         "forum": "https://nxsys.assembla.com/spaces/aether/messages",
-        "wiki": "http://code.fnetit.net/projects/aether/wiki",
+        "wiki": "https://nxsys.assembla.com/spaces/aether/wiki",
         "source": "https://nxsys.assembla.com/code/onx/subversion-3/repo",
         "rss": "https://nxsys.assembla.com/spaces/aether/stream.rss"
      },
