@@ -32,29 +32,41 @@
     <!-- ============================================  -->
     <target name="build" depends="prepare">
         <echo msg="Copying files to build directory..." />
-
-        <echo msg="Copying ./about.php to ./build directory..." />
-        <copy file="./about.php" tofile="./build/about.php" />
-
-        <echo msg="Copying ./browsers.php to ./build directory..." />
-        <copy file="./browsers.php" tofile="./build/browsers.php" />
-
-        <echo msg="Copying ./contact.php to ./build directory..." />
-        <copy file="./contact.php" tofile="./build/contact.php" />
+		
+		<copy todir="./build/src">
+			<fileset dir="./src">
+				<include name="**"></include>
+				<exclude name="**/.svn/**"></exclude>
+			</fileset>
+		</copy>
+		
+		<copy file="./composer.json" tofile="./build/composer.json" />
+		<copy file="./AGPL.txt" tofile="./build/AGPL.txt" />
+		<copy file="./LICENSE.txt" tofile="./build/LICENSE.txt" />
+		<copy file="./README.txt" tofile="./build/README.txt" />
+		<copy file="./SECURITY.txt" tofile="./build/SECURITY.txt" />
     </target>
 
     <!-- ============================================  -->
     <!-- (DEFAULT)  Target: dist                       -->
     <!-- ============================================  -->
-    <target name="dist" depends="build">
-        <echo msg="Creating archive..." />
+    <target name="dist" depends="build" if="ver">
+		
+		<echo msg="Creating archive..." />
 
-        <tar destfile="./build/build.tar.gz" compression="gzip">
-            <fileset dir="./build">
-                <include name="*" />
-            </fileset>
-        </tar>
+		<zip destfile="./build/build.zip">
+			<fileset dir="./build">
+				<include name="**" />
+			</fileset>
+		</zip>
 
-        <echo msg="Files copied and compressed in build directory OK!" />
-    </target>
+		<echo msg="Files copied and compressed in build directory OK!" />
+		<echo msg="Moving to tag for version ${ver}" />
+		<copy todir="../tags/${ver}">
+			<fileset dir="./build">
+				<include name="**"></include>
+				<exclude name="**/.svn/**"></exclude>
+			</fileset>
+		</copy>
+	</target>
 </project>
