@@ -1,0 +1,69 @@
+{
+    "name": "nxsys/toolkits.aether-sdk",
+    "description": "Aether.sh: Cloud Console SDK",
+    "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal", "sdk"],
+    "homepage": "http://nxsys.org/spaces/aether",
+    "license": ["AGPL-3.0-only", "proprietary"],
+    "type": "project",
+    "support":
+    {
+        "docs": "https://aethershell.readthedocs.io/en/latest",
+        "email": "onx@nxsysts.com",
+        "chat": "https://onx.zulipchat.com",
+        "issues": "https://nxsys.assembla.com/spaces/aether/tickets",
+        "forum": "https://nxsys.assembla.com/spaces/aether/messages",
+        "wiki": "http://code.fnetit.net/projects/aether/wiki",
+        "source": "https://nxsys.assembla.com/code/onx/subversion-3/repo",
+        "rss": "https://nxsys.assembla.com/spaces/aether/stream.rss"
+     },
+    "authors":
+    [
+        {
+            "name": "Nexus Systems, Inc.",
+            "homepage": "https://nexussystemsinc.com/about/foss-commitment.html",
+            "email": "onx@nxsysts.com",
+            "role": "Dev Team"
+        }
+    ],
+    "config":
+    {
+        "optimize-autoloader": true
+    },
+    "autoload":
+    {
+        "psr-4": { "": "src/" }
+    },
+    "require":
+    {
+        "php": "^7.2",
+        "ext-openssl": "^7.2",
+        "ext-pthreads": "~3.0",
+        "composer/composer":            "~1.6",
+        "league/tactician":             "^1.0",
+        "monolog/monolog":              "~1.1",
+        "nette/neon":                   "~2.3",
+        "nxsys/core":                   "*",
+        "nxsys/library.bridges-sfconsole": "dev-master",
+        "phpseclib/phpseclib":          "~0.3",
+        "pimple/pimple":                "^3.0",
+        "react/zmq":                    "^0.3.0",
+        "sensiolabs/ansi-to-html":      "~1.1",
+        "symfony/config":               "~3.0",
+        "symfony/console":              "~3.0",
+        "symfony/dependency-injection": "~3.0",
+        "symfony/process":              "~3.0",
+        "symfony/security-acl":         "~3.0",
+        "symfony/security-core":        "~3.0"
+    },
+	"suggests":
+    {
+        "ext-mcrypt": "*",
+        "ext-hrtime": ">=0.6.0"
+    },
+    "require-dev":
+    {
+
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
