@@ -1,14 +1,14 @@
 {
-    "name": "nxsys/application.aether",
-    "description": "Aether.Sh: Cloud Console",
-    "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal"],
+    "name": "nxsys/toolkits.aether-sdk",
+    "description": "Aether.sh: Cloud Console SDK",
+    "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal", "sdk"],
     "homepage": "http://nxsys.org/spaces/aether",
     "license": ["AGPL-3.0-only", "proprietary"],
     "type": "project",
     "support":
     {
         "docs": "https://aethershell.readthedocs.io/en/latest",
-        "email": "os@nxsysts.com",
+        "email": "onx@nxsysts.com",
         "chat": "https://onx.zulipchat.com",
         "issues": "https://nxsys.assembla.com/spaces/aether/tickets",
         "forum": "https://nxsys.assembla.com/spaces/aether/messages",
@@ -37,16 +37,12 @@
     {
         "php": "^7.2",
         "ext-openssl": "^7.2",
-        "ext-pthreads": "~3.0",
-        "nxsys/framework.aether": "*@dev"
+        "ext-pthreads": "~3.0"
     },
     "require-dev":
     {
 
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {"type": "path", "url": "./src/Aether"}
-    ]
+    "prefer-stable": true
 }
