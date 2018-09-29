@@ -1,0 +1,3 @@
+sphinxcontrib-phpdomain
+breathe
+guzzle_sphinx_theme
