@@ -22,10 +22,10 @@
  */
 
 /** @namespace Native Namespace */
-namespace NxSys\Frameworks\Aether\Execution\Job;
+namespace NxSys\Toolkits\Aether\SDK\Core\Execution\Job;
 
 /** Local Project Dependencies **/
-use NxSys\Frameworks\Aether;
+use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Framework Dependencies **/
 
@@ -33,49 +33,46 @@ use NxSys\Frameworks\Aether;
 /** Library Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
-//....
-use Thread;
-
 
 /**
- * Undocumented class
+ * Enables the execution of a Callable as a Coroutine
  *
  * Why does this exist? What does this do?
  *
- * @throws NxSys\Frameworks\Aether\IException Well, does it?
+ * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
+ * @see Callable
  */
-// abstract class BaseJob extends CoreEsc\pthreads\Thread implements IJob
-abstract class BaseJob extends Thread implements IJob
+class Coroutine extends Async
 {
-	/**
-	 * mmmm
-	 */
-	public function setExternalRoutine(callable $hfRoutineTarget)
+	public $params;
+	protected $_oTargetObject;
+	public $return;
+	// use ESC\DecoratingTrait
+
+	public function __invoke()
 	{
-		$this->_oTargetObject=(array) $hfRoutineTarget;
+		$this->params=func_get_args();
+		return $this->start();
 	}
 
-	/**
-	 * Undocumented function
-	 *
-	 * @return mixed
-	 */
-	public function getReturn(): mixed
+	public function setRoutine(callable $hRoutine)
 	{
-		//eehh we really should be joined to do this
-		static $bIsJoined;
-		if(!$bIsJoined)
-		{
-			$this->join();
-			$bIsJoined=true;
-		}
-		return $this->return;
+		$this->_oTargetObject=$hRoutine;
 	}
 
-	public function __tostring(): string
+	public function run()
 	{
-		return (string)$this->getReturn();
+		//if $this->_oTargetObject object
+			//if object instance of CoroutineAware
+			//object->setThreadReference($this)
+
+		//Target is prob Volatile
+		$this->return=((array)$this->_oTargetObject)(...$this->params);
 	}
 
+	public function yield(mixed $value = null)
+	{
+		$this->mYieldedResult=$value;
+	}
 }

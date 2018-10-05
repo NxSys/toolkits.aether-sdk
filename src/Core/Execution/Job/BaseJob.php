@@ -22,10 +22,10 @@
  */
 
 /** @namespace Native Namespace */
-namespace NxSys\Frameworks\Aether\Execution\Job;
+namespace NxSys\Toolkits\Aether\SDK\Core\Execution\Job;
 
 /** Local Project Dependencies **/
-use NxSys\Frameworks\Aether;
+use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Framework Dependencies **/
 
@@ -33,17 +33,49 @@ use NxSys\Frameworks\Aether;
 /** Library Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
+//....
+use Thread;
+
 
 /**
- * Enables the execution of a Callable as a Coroutine
+ * Undocumented class
  *
  * Why does this exist? What does this do?
  *
- * @throws NxSys\Frameworks\Aether\IException Well, does it?
+ * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
- * @see Callable
  */
-class Fiber extends BaseJob
+// abstract class BaseJob extends CoreEsc\pthreads\Thread implements IJob
+abstract class BaseJob extends Thread implements IJob
 {
+	/**
+	 * mmmm
+	 */
+	public function setExternalRoutine(callable $hfRoutineTarget)
+	{
+		$this->_oTargetObject=(array) $hfRoutineTarget;
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @return mixed
+	 */
+	public function getReturn(): mixed
+	{
+		//eehh we really should be joined to do this
+		static $bIsJoined;
+		if(!$bIsJoined)
+		{
+			$this->join();
+			$bIsJoined=true;
+		}
+		return $this->return;
+	}
+
+	public function __tostring(): string
+	{
+		return (string)$this->getReturn();
+	}
 
 }

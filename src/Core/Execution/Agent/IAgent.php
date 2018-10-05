@@ -22,10 +22,10 @@
  */
 
 /** @namespace Native Namespace */
-namespace NxSys\Frameworks\Aether\Execution\Job;
+namespace NxSys\Toolkits\Aether\SDK\Core\Execution\Agents;
 
 /** Local Project Dependencies **/
-use NxSys\Frameworks\Aether;
+use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Framework Dependencies **/
 
@@ -33,16 +33,15 @@ use NxSys\Frameworks\Aether;
 /** Library Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
-
 /**
- * Interface for executable/runable object
+ * Undocumented class
  *
  * Why does this exist? What does this do?
  *
- * @throws NxSys\Frameworks\Aether\IException Well, does it?
+ * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- interface IJob extends CoreEsc\pthreads\IThread
+ interface IAgent extends CoreEsc\pthreads\IWorker
  {
 
  }

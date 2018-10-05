@@ -22,10 +22,10 @@
  */
 
 /** @namespace Native Namespace */
-namespace NxSys\Frameworks\Aether\Execution\Job;
+namespace NxSys\Toolkits\Aether\SDK\Core\Execution\Job;
 
 /** Local Project Dependencies **/
-use NxSys\Frameworks\Aether;
+use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Framework Dependencies **/
 
@@ -39,11 +39,11 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  *
  * Why does this exist? What does this do?
  *
- * @throws NxSys\Frameworks\Aether\IException Well, does it?
+ * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  * @see Callable
  */
-class Timer extends Fiber
+class Defer extends BaseJob
 {
 
 }

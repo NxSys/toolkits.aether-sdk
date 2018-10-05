@@ -22,10 +22,10 @@
  */
 
 /** @namespace Native Namespace */
-namespace NxSys\Frameworks\Aether\;
+namespace NxSys\Toolkits\Aether\SDK\Core\;
 
 /** Local Project Dependencies **/
-use NxSys\Frameworks\Aether\;
+use NxSys\Toolkits\Aether\SDK\Core\;
 
 /** Framework Dependencies **/
 
@@ -38,7 +38,7 @@ use NxSys\Frameworks\Aether\;
  *
  * Why does this exist? What does this do?
  *
- * @throws NxSys\Frameworks\Aether\IException Well, does it?
+ * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
  class ClassName extends AnotherClass implements Interface

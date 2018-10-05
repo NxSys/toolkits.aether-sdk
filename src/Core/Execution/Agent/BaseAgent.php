@@ -1,6 +1,6 @@
 <?php
 /**
- * FILENAME
+ * $BaseName$
  * $Id$
  *
  * DESCRIPTION
@@ -22,7 +22,7 @@
  */
 
 /** @namespace Native Namespace */
-namespace NxSys\Toolkits\Aether\SDK\Core;
+namespace NxSys\Toolkits\Aether\SDK\Core\Execution\Agents;
 
 /** Local Project Dependencies **/
 use NxSys\Toolkits\Aether\SDK\Core;
@@ -31,7 +31,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 
 
 /** Library Dependencies **/
-
+use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 /**
  * Undocumented class
@@ -41,7 +41,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- class ClassName extends AnotherClass implements Interface
+ class BaseAgent extends CoreEsc\pthreads\Worker extends CoreEsc\pthreads\IAgent
  {
 
  }
