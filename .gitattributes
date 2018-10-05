@@ -34,6 +34,14 @@ src-docs/source/syscmds.rst -text
 src-docs/source/usage.rst -text
 src-docs/source/wacc.png -text
 src/Common.php -text
+src/Core/Comms/BaseClient.php -text
+src/Core/Comms/BaseFactory.php -text
+src/Core/Comms/BaseListener.php -text
+src/Core/Comms/ClientFactory.php -text
+src/Core/Comms/CommsExecptionType.php -text
+src/Core/Comms/IClient.php -text
+src/Core/Comms/IListener.php -text
+src/Core/Comms/ListenerFactory.php -text
 src/Core/Execution/Agent/BaseAgent.php -text
 src/Core/Execution/Agent/IAgent.php -text
 src/Core/Execution/Job/Async.php -text
