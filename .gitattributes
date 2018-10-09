@@ -34,6 +34,9 @@ src-docs/source/syscmds.rst -text
 src-docs/source/usage.rst -text
 src-docs/source/wacc.png -text
 src/Common.php -text
+src/Core/Boot/BootExceptionType.php -text
+src/Core/Boot/Configuator.php -text
+src/Core/Boot/Executor.php -text
 src/Core/Comms/BaseClient.php -text
 src/Core/Comms/BaseFactory.php -text
 src/Core/Comms/BaseListener.php -text
