@@ -7,6 +7,7 @@
 /box.json -text
 /build.xml -text
 /composer.json -text
+/masthead.txt -text
 /sonar-project.properties -text
 src-docs/Makefile -text
 src-docs/apigen.neon -text

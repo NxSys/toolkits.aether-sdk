@@ -13,7 +13,7 @@
  * @subpackage SDK\Core
  * @license http://nxsys.org/spaces/aether/wiki/license
  * Please see the license.txt file or the url above for full copyright and license information.
- * @copyright Copyright 2018 Nexus Systems, inc.
+ * @copyright Copyright 2018 Nexus Systems, Inc.
  *
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  * @author $LastChangedBy$
@@ -28,7 +28,7 @@ namespace NxSys\Toolkits\Aether\SDK\Core\Boot;
 use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Library Dependencies **/
-use Symfony\Component\Console;
+use Symfony\Component\Console as sfConsole;
 
 /** System Dependencies **/
 use Throwable;
@@ -42,36 +42,81 @@ use Throwable;
  * @throws NxSys\Toolkits\Aether\SDK\Core\Boot\BootExceptionType Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- class Executor extends Console\Command\Command
- {
-    public function execute()
-    {
-        #start console logging
-        //do allocation & resource checking
-            //disk space? mem? dynamic modules/phars?
+class Executor extends sfConsole\Command\Command
+{
+	/**
+	 * name of the target class
+	 *
+	 * @var string
+	 */
+	public $sTargetClassname;
 
-        //do config
-            //load config
-        #start configured logger
+	/**
+	 * short displayed name of the target
+	 *
+	 * @var string
+	 */
+	public $sTargetShortname;
 
-        //do system initialization
-            //DI
-            //@todo setup Distributed Exception & Recovery System DXCR
+	/**
+	 * ctor
+	 *
+	 * @param string $sTargetClassname
+	 * @param string $sTargetShortname
+	 */
+	public function __construct(string $sTargetClassname, string $sTargetShortname)
+	{
+		$this->sTargetClassname=$sTargetClassname;
+		$this->sTargetShortname=$sTargetShortname;
+	}
+	public function configure()
+	{
+		$this
+			->setName($this->sTargetShortname);
+	}
 
-        //do instantiation
-        try
-        {
-            $return=ModuleCode::run($oConfigInstance);
-        }
-        catch(Throwable $e)
-        {
+	/**
+	 * Main entry point via sfConsole Application
+	 *
+	 * @param sfConsole\Input\InputInterface $oInput
+	 * @param sfConsole\Output\OutputInterface $oPut
+	 * @return integer
+	 */
+	public function execute(sfConsole\Input\InputInterface $oInput, sfConsole\Output\OutputInterface $oPut): integer
+	{
+		$iRet=0;
+		$this->start();
+		return $iRet;
+	}
 
-        }
+	public function start()
+	{
+		#start console logging
+		//do allocation & resource checking
+			//disk space? mem? dynamic modules/phars?
 
-        //finalization
-        #log output
+		//do config
+			//load config
+		#start configured logger
 
-        //deallocation/completion
-        return;
-    }
+		//do system initialization
+			//DI
+			//@todo setup Distributed Exception & Recovery System DXCR
+
+		//do instantiation
+		try
+		{
+			//$return=ModuleCode::run($oConfigInstance);
+		}
+		catch(Throwable $e)
+		{
+
+		}
+
+		//finalization
+		#log output
+
+		//deallocation/completion
+		return;
+	}
  }

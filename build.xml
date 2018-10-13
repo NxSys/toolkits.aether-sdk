@@ -1,26 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ===========================================================================
-# build.xml
+# $Basename$
 # $Id$
 #
 # Description:
-#
+#	Phing build script file
 # Meta Tags:
-# [@package WACC
+# @package Aether
 # @subpackage Meta
+# @license http://nxsys.org/spaces/aether/wiki/license
+# Please see the license.txt file or the url above for full copyright and license information.
+# @copyright Copyright 2018 Nexus Systems, Inc.
+#
 # @author Chris R. Feamster <cfeamster@f2developments.com>
 # @author $LastChangedBy$
 #
 # @version $Revision$
-# @copyright (c) 2013 F2 Developments, Inc. All rights reserved.]
-#
 ============================================================================ -->
-<project name="FooBar" default="dist">
+<project name="AetherSDK" default="dist">
 
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
     <!-- ============================================  -->
     <target name="prepare">
+		<property file="build.properties" />
+		<if>
+			<not>
+				<or>
+					<available file="box.json" />
+					<available file="masthead.txt" />
+					<available file="build.properties" />
+				</or>
+			</not>
+			<then>
+				<fail message="One of build.properties, box.json, PharMain.php or masthead.txt is missing!"/>
+			</then>
+		</if>
         <echo msg="Making directory ./build" />
         <mkdir dir="./build" />
         <echo msg="Making directory ./docs" />
@@ -31,20 +46,18 @@
     <!-- Target: build                                 -->
     <!-- ============================================  -->
     <target name="build" depends="prepare">
-        <echo msg="Copying files to build directory..." />
-		
-		<copy todir="./build/src">
-			<fileset dir="./src">
-				<include name="**"></include>
-				<exclude name="**/.svn/**"></exclude>
-			</fileset>
-		</copy>
+        <echo msg="Generating PHAR..." />
+		<exec command="box build" />
+		<echo msg="Copying files to build directory..." />
+		<copy file="./out/AetherSDK.phar" tofile="./build/AetherSDK.phar" />
 		
 		<copy file="./composer.json" tofile="./build/composer.json" />
 		<copy file="./AGPL.txt" tofile="./build/AGPL.txt" />
 		<copy file="./LICENSE.txt" tofile="./build/LICENSE.txt" />
 		<copy file="./README.txt" tofile="./build/README.txt" />
 		<copy file="./SECURITY.txt" tofile="./build/SECURITY.txt" />
+
+		
     </target>
 
     <!-- ============================================  -->

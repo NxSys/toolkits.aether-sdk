@@ -13,7 +13,7 @@
  * @subpackage SDK\Core
  * @license http://nxsys.org/spaces/aether/wiki/license
  * Please see the license.txt file or the url above for full copyright and license information.
- * @copyright Copyright 2018 Nexus Systems, inc.
+ * @copyright Copyright 2018 Nexus Systems, Inc.
  *
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  * @author $LastChangedBy$
@@ -40,3 +40,4 @@ use NxSys\Toolkits\Aether\SDK\Core;
  */
  interface BootExceptionType extends Core\IException
  {}
+    

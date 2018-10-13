@@ -1,26 +1,18 @@
 {
 	"algorithm":	"SHA512",
-	"banner-file":	"banner.txt",
+	"banner-file":	"masthead.txt",
 	"blacklist":	["libs", "etc"],
 	"compression":	"GZ",
-	"directories":	["src", "vendors"],
+	"directories":	["src", "vendor"],
 	"directories-bin": ["res"],
-	"extract": true,
 	"files":
 	[
-		"ConsoleMain.php",
-		"WebMain.php"
+		"res/main.txt"
 	],
 	"intercept": true,
-	"main": "executive/aesh.php",
-	"map": ?,
-	"metadata": ?,
-	"mimetypes": ?,
-	"mung": ?,
-	"not-found": ?,
-	"output": ?,
-	"replacements": ?,
-	"shebang": ?,
-	"stub": ?,
-	"web": ?
+	"main": "res/main.txt",
+	"metadata": "@todo",
+	"output": "out/AetherSDK.phar",
+	"replacements": {},
+	"stub": true
 }
