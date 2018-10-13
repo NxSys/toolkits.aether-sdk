@@ -1,0 +1,8 @@
+This phar is not ment to be executable, but is a libray package for Aether.sh. 
+To use please try to simply require the the builtin autoloader:
+
+	require_once 'phar://aether-sdk.phar/vendors/autoload.php';
+
+For details on how to use this library, and more, please visit:
+
+	https://man.aether.sh

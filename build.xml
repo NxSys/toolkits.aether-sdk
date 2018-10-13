@@ -26,14 +26,13 @@
 		<property file="build.properties" />
 		<if>
 			<not>
-				<or>
+				<and>
 					<available file="box.json" />
 					<available file="masthead.txt" />
-					<available file="build.properties" />
-				</or>
+				</and>
 			</not>
 			<then>
-				<fail message="One of build.properties, box.json, PharMain.php or masthead.txt is missing!"/>
+				<fail message="One of box.json or masthead.txt is missing!"/>
 			</then>
 		</if>
         <echo msg="Making directory ./build" />

@@ -8,6 +8,7 @@
 /build.xml -text
 /composer.json -text
 /masthead.txt -text
+res/main.txt -text
 /sonar-project.properties -text
 src-docs/Makefile -text
 src-docs/apigen.neon -text
