@@ -1,3 +1,4 @@
 sphinxcontrib-phpdomain
+sphinxcontrib-plantuml
 breathe
 guzzle_sphinx_theme

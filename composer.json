@@ -36,7 +36,15 @@
     },
     "require":
     {
-        "php": "^7.2",
+        "php": "^7.2"
+    },
+	"suggest":
+    {
+        "ext-mcrypt": "*",
+        "ext-hrtime": ">=0.6.0"
+    },
+    "require-dev":
+    {
         "ext-openssl": "^7.2",
         "ext-pthreads": "~3.0",
         "composer/composer":            "~1.6",
@@ -55,15 +63,6 @@
         "symfony/process":              "~3.0",
         "symfony/security-acl":         "~3.0",
         "symfony/security-core":        "~3.0"
-    },
-	"suggest":
-    {
-        "ext-mcrypt": "*",
-        "ext-hrtime": ">=0.6.0"
-    },
-    "require-dev":
-    {
-
     },
     "minimum-stability": "dev",
     "prefer-stable": true

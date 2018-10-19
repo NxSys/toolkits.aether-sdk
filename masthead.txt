@@ -1,4 +1,4 @@
-$Basename: $
+$Basename$
 $Id$
 
 DESCRIPTION

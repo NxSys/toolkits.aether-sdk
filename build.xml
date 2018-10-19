@@ -18,16 +18,16 @@
 # @version $Revision$
 ============================================================================ -->
 <project name="AetherSDK" default="dist">
+	<property file="build.properties" />
 
     <!-- ============================================  -->
     <!-- Target: prepare                               -->
     <!-- ============================================  -->
     <target name="prepare">
-		<property file="build.properties" />
 		<if>
 			<not>
 				<and>
-					<available file="box.json" />
+					<available file="box.json.dist" />
 					<available file="masthead.txt" />
 				</and>
 			</not>
@@ -45,10 +45,29 @@
     <!-- Target: build                                 -->
     <!-- ============================================  -->
     <target name="build" depends="prepare">
+
+        <echo msg="Generating PHAR..." />
+
+		<copy file="box.json.dist" tofile="box.json" />
+		<reflexive>
+			<fileset dir="."
+				includes="box.json masthead.txt"/>
+			<filterchain>
+				<replacetokens begintoken="#" endtoken="#">
+					<token key="PH_PRJ-IDENT" value="${prj.identkey}" />
+					<token key="PH_BUILDID" value="${prj.identkey}" />
+					<token key="PH_PRJ-NAME" value="${prj.name}" />
+					<token key="PH_VERSION" value="${prj.ver}" />
+					<token key="year" value="${YEAR}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+
         <echo msg="Generating PHAR..." />
 		<exec command="box build" />
 		<echo msg="Copying files to build directory..." />
 		<copy file="./out/AetherSDK.phar" tofile="./build/AetherSDK.phar" />
+		<copy file="./out/AetherSDK.phar" tofile="../acn/libs/AetherSDK.phar" />
 		
 		<copy file="./composer.json" tofile="./build/composer.json" />
 		<copy file="./AGPL.txt" tofile="./build/AGPL.txt" />

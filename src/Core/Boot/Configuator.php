@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * $BaseName$
  * $Id$
  *

@@ -4,7 +4,8 @@
 /PharMain.php -text
 /README.txt -text
 /SECURITY.txt -text
-/box.json -text
+/box.json.dist -text
+/build.properties -text
 /build.xml -text
 /composer.json -text
 /masthead.txt -text

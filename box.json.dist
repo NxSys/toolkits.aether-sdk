@@ -11,8 +11,13 @@
 	],
 	"intercept": true,
 	"main": "res/main.txt",
-	"metadata": "@todo",
+	"metadata": "#PH_PRJ-NAME# #PH_VERSION# #PH_BUILDID#",
 	"output": "out/AetherSDK.phar",
-	"replacements": {},
+	"replacements": 
+	{
+		"PH_PHAR-VERSION": "#PH_VERSION#",
+		"PH_PHAR-BUILDID": "#PH_BUILDID#",
+		"version": ""
+	},
 	"stub": true
 }
