@@ -20,10 +20,10 @@
 <project name="AetherSDK" default="dist">
 	<property file="build.properties" />
 
-    <!-- ============================================  -->
-    <!-- Target: prepare                               -->
-    <!-- ============================================  -->
-    <target name="prepare">
+	<!-- ============================================  -->
+	<!-- Target: prepare                               -->
+	<!-- ============================================  -->
+	<target name="prepare">
 		<if>
 			<not>
 				<and>
@@ -35,18 +35,40 @@
 				<fail message="One of box.json or masthead.txt is missing!"/>
 			</then>
 		</if>
-        <echo msg="Making directory ./build" />
-        <mkdir dir="./build" />
-        <echo msg="Making directory ./docs" />
-        <mkdir dir="./build" />        
-    </target>
+		<echo msg="Making directory ./build" />
+		<mkdir dir="./build" />
+		<echo msg="Making directory ./docs" />
+		<mkdir dir="./docs" />        
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: build                                 -->
-    <!-- ============================================  -->
-    <target name="build" depends="prepare">
+	<!-- ============================================  -->
+	<!-- Target: build                                 -->
+	<!-- ============================================  -->
+	<target name="build" depends="prepare">
 
-        <echo msg="Generating PHAR..." />
+		
+		<echo msg="Copying files to build directory..." />
+		<copy todir="./build/src">
+			<fileset dir="./src">
+				<include name="**"></include>
+				<exclude name="**/.svn/**"></exclude>
+			</fileset>
+		</copy>
+		
+		<copy file="./composer.json" tofile="./build/composer.json" />
+		<copy file="./AGPL.txt" tofile="./build/AGPL.txt" />
+		<copy file="./LICENSE.txt" tofile="./build/LICENSE.txt" />
+		<copy file="./README.txt" tofile="./build/README.txt" />
+		<copy file="./SECURITY.txt" tofile="./build/SECURITY.txt" />
+
+		
+	</target>
+
+	<!-- ============================================  -->
+	<!-- (DEFAULT)  Target: dist                       -->
+	<!-- ============================================  -->
+	<target name="dist" depends="build" if="ver">
+		<echo msg="Generating PHAR..." />
 
 		<copy file="box.json.dist" tofile="box.json" />
 		<reflexive>
@@ -63,35 +85,9 @@
 			</filterchain>
 		</reflexive>
 
-        <echo msg="Generating PHAR..." />
+		<echo msg="Generating PHAR..." />
 		<exec command="box build" />
-		<echo msg="Copying files to build directory..." />
-		<copy file="./out/AetherSDK.phar" tofile="./build/AetherSDK.phar" />
-		<copy file="./out/AetherSDK.phar" tofile="../acn/libs/AetherSDK.phar" />
-		
-		<copy file="./composer.json" tofile="./build/composer.json" />
-		<copy file="./AGPL.txt" tofile="./build/AGPL.txt" />
-		<copy file="./LICENSE.txt" tofile="./build/LICENSE.txt" />
-		<copy file="./README.txt" tofile="./build/README.txt" />
-		<copy file="./SECURITY.txt" tofile="./build/SECURITY.txt" />
-
-		
-    </target>
-
-    <!-- ============================================  -->
-    <!-- (DEFAULT)  Target: dist                       -->
-    <!-- ============================================  -->
-    <target name="dist" depends="build" if="ver">
-		
-		<echo msg="Creating archive..." />
-
-		<zip destfile="./build/build.zip">
-			<fileset dir="./build">
-				<include name="**" />
-			</fileset>
-		</zip>
-
-		<echo msg="Files copied and compressed in build directory OK!" />
+		<!-- @TODO: Send .phar to github release. -->
 		<echo msg="Moving to tag for version ${ver}" />
 		<copy todir="../tags/${ver}">
 			<fileset dir="./build">
