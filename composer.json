@@ -31,8 +31,7 @@
     },
     "autoload":
     {
-        "psr-4": { "": "src/" },
-        "files": ["phar://AetherSDK.phar/vendor/composer/autoload_classmap.php"]
+        "psr-4": { "": "src/" }
     },
     "require":
     {
