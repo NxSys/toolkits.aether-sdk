@@ -33,6 +33,8 @@ use Symfony\Component\Console as sfConsole;
 /** System Dependencies **/
 use Throwable;
 
+const ARG_CONFIG='config';
+
 /**
  * Configures and Executes Aether component
  *
@@ -45,11 +47,11 @@ use Throwable;
 class Executor extends sfConsole\Command\Command
 {
 	/**
-	 * name of the target class
+	 * instance of the target class
 	 *
-	 * @var string
+	 * @var AbstractMain
 	 */
-	public $sTargetClassname;
+	public $oTarget;
 
 	/**
 	 * short displayed name of the target
@@ -58,21 +60,30 @@ class Executor extends sfConsole\Command\Command
 	 */
 	public $sTargetShortname;
 
+	const ARG_CONFIG=ARG_CONFIG;
+
 	/**
 	 * ctor
 	 *
-	 * @param string $sTargetClassname
+	 * @param AbstractMain $oTarget
 	 * @param string $sTargetShortname
 	 */
-	public function __construct(string $sTargetClassname, string $sTargetShortname)
+	public function __construct(AbstractMain $oTarget, string $sTargetShortname)
 	{
-		$this->sTargetClassname=$sTargetClassname;
+		$this->oTarget=$oTarget;
 		$this->sTargetShortname=$sTargetShortname;
+		parent::__construct();
 	}
+
+
 	public function configure()
 	{
 		$this
-			->setName($this->sTargetShortname);
+			->setName($this->sTargetShortname)
+			->addOption(ARG_CONFIG, ARG_CONFIG[0],
+						sfConsole\Input\InputOption::VALUE_OPTIONAL,
+						'alternative configuration root',
+						$this->sTargetShortname . '.xml');
 	}
 
 	/**
@@ -82,22 +93,44 @@ class Executor extends sfConsole\Command\Command
 	 * @param sfConsole\Output\OutputInterface $oPut
 	 * @return integer
 	 */
-	public function execute(sfConsole\Input\InputInterface $oInput, sfConsole\Output\OutputInterface $oPut): integer
+	public function execute(sfConsole\Input\InputInterface $oInput, sfConsole\Output\OutputInterface $oPut): int
 	{
+		$this->oInput = $oInput;
+		$this->oOutput = $oPut;
 		$iRet=0;
-		$this->start();
-		return $iRet;
-	}
-
-	public function start()
-	{
 		#start console logging
 		//do allocation & resource checking
 			//disk space? mem? dynamic modules/phars?
 
 		//do config
 			//load config
+		
 		#start configured logger
+		//check to see if there are ACN Main exclusive events
+		Container::boot($this->oInput->getOption(ARG_CONFIG));
+
+		$sRunMode = $this->oTarget->getRunMode();
+		switch ($sRunMode)
+		{
+			case 'maintenance':
+			{
+				$iRet = $this->oTarget->maintenanceRun();
+			}
+			case 'default':
+			{
+				$iRet = $this->start();
+			}
+			default:
+			{
+				$iRet = 1;
+			}
+		}
+		return $iRet;
+	}
+
+	public function start(): int
+	{
+		$iErrCode=0;
 
 		//do system initialization
 			//DI
@@ -106,17 +139,18 @@ class Executor extends sfConsole\Command\Command
 		//do instantiation
 		try
 		{
-			//$return=ModuleCode::run($oConfigInstance);
+			$return=$this->oTarget->proccessEvent();
 		}
 		catch(Throwable $e)
 		{
-
+			var_dump($e);
+			$iErrCode= 1;
 		}
 
 		//finalization
 		#log output
 
 		//deallocation/completion
-		return;
+		return (int) $iErrCode;
 	}
  }

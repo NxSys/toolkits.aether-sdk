@@ -34,6 +34,10 @@ use Symfony\Component\Config as sfConfig;
 /** System Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 use Throwable;
+use NxSys\Core\ExtensibleSystemClasses\standard\__PHP_Incomplete_Class;
+
+
+const DEFAULT_CONTAINER_FILE='aether.xml';
 
 /**
  * Configures and Executes Aether component
@@ -46,25 +50,28 @@ use Throwable;
  */
 class Configurator
 {
-	const CONTAINER_FILE='c3.xml';
+	const DEFAULT_CONTAINER_FILE=DEFAULT_CONTAINER_FILE;
+
+	public $sBaseContainerFile;
 
 	static $oInstance;
 	public $oDIContainer;
 
-	static function boot()
+	static function boot(string $sBaseContainerFile=DEFAULT_CONTAINER_FILE)
 	{
 		if (isset(self::$oInstance))
 		{
 			throw new InitializationException('can only boot once');
 		}
-		self::$oInstance=new BootLoader;
-
+		self::$oInstance=new self;
+		self::$oInstance->sBaseContainerFile=$sBaseContainerFile;
+		self::$oInstance->initContainers();
 		//exec self check tests
 	}
 
 	private function __construct()
 	{
-		$this->initContainers();
+		
 	}
 
 	public function initContainers()
@@ -76,11 +83,12 @@ class Configurator
 
 		//first ini files
 		$ini_loader = new SfDI\Loader\IniFileLoader($container, new sfConfig\FileLocator($search_paths));
-		$ini_loader->load('config.sample.ini');
+		##@todo
+		$ini_loader->load('..\config.sample.ini');
 
 		//now xml files
 		$loader = new SfDI\Loader\XmlFileLoader($container, new sfConfig\FileLocator($search_paths));
-		$loader->load(self::CONTAINER_FILE);
+		$loader->load($this->sBaseContainerFile);
 		$this->oDIContainer=$container;
 	}
 
