@@ -29,6 +29,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Library Dependencies **/
 use Symfony\Component\Console as sfConsole;
+use Monolog\Logger;
 
 /** System Dependencies **/
 use Throwable;
@@ -49,7 +50,7 @@ class Executor extends sfConsole\Command\Command
 	/**
 	 * instance of the target class
 	 *
-	 * @var AbstractMain
+	 * @var Main
 	 */
 	public $oTarget;
 
@@ -65,10 +66,10 @@ class Executor extends sfConsole\Command\Command
 	/**
 	 * ctor
 	 *
-	 * @param AbstractMain $oTarget
+	 * @param Main $oTarget
 	 * @param string $sTargetShortname
 	 */
-	public function __construct(AbstractMain $oTarget, string $sTargetShortname)
+	public function __construct(Main $oTarget, string $sTargetShortname)
 	{
 		$this->oTarget=$oTarget;
 		$this->sTargetShortname=$sTargetShortname;
@@ -97,6 +98,7 @@ class Executor extends sfConsole\Command\Command
 	{
 		$this->oInput = $oInput;
 		$this->oOutput = $oPut;
+		$this->oLogger = new Logger(strtoupper($this->sTargetShortname));
 		$iRet=0;
 		#start console logging
 		//do allocation & resource checking
@@ -106,9 +108,26 @@ class Executor extends sfConsole\Command\Command
 			//load config
 		
 		#start configured logger
-		//check to see if there are ACN Main exclusive events
+		//check to see if there are ACN Main exclusive configs
 		Container::boot($this->oInput->getOption(ARG_CONFIG));
 
+		Container::setDependency('sys.log', 
+			(new class ([$this, "log"]) //extends \Psr\Log\AbstractLogger
+			{
+				function __construct($oTarget)
+				{	
+					$this->oTarget=$oTarget;
+				}
+				function __call($sMethodName, $aArgs)
+				{
+					$oTarget = $this->oTarget;
+					$oTarget(...$aArgs);
+				}
+
+			}) );
+
+		
+			//yes, yes affecting state would indeed be passed through the Container
 		$sRunMode = $this->oTarget->getRunMode();
 		switch ($sRunMode)
 		{
@@ -118,39 +137,33 @@ class Executor extends sfConsole\Command\Command
 			}
 			case 'default':
 			{
-				$iRet = $this->start();
+				//do system initialization
+				//DI
+				//@todo setup Distributed Exception & Recovery System DXCR
+				$iRet = $this->oTarget->start();
 			}
 			default:
 			{
-				$iRet = 1;
+				$iRet = -1;
 			}
 		}
-		return $iRet;
-	}
-
-	public function start(): int
-	{
-		$iErrCode=0;
-
-		//do system initialization
-			//DI
-			//@todo setup Distributed Exception & Recovery System DXCR
-
-		//do instantiation
-		try
-		{
-			$return=$this->oTarget->proccessEvent();
-		}
-		catch(Throwable $e)
-		{
-			var_dump($e);
-			$iErrCode= 1;
-		}
-
 		//finalization
 		#log output
-
+	
 		//deallocation/completion
-		return (int) $iErrCode;
+		return (int) $iRet;
 	}
- }
+
+	/**
+	 * Global log message function
+	 *
+	 * @param string $sMsg
+	 * @param [type] ...$aOpts
+	 * @return void
+	 */
+	public function log($sMsg, ...$aOpts)
+	{
+		//$this->oOutput->writeln($aOpts[0]['channel'] . ': ' . $sMsg);
+		$this->oLogger->info($sMsg, $aOpts[0]);
+	}
+}

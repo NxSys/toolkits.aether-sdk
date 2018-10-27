@@ -35,15 +35,17 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 
 /**
- * Enables the execution of a Callable as a Coroutine
- *
- * Why does this exist? What does this do?
- *
+ * Implements a nominally cooperativly scheduled thread.
+ * IE this "thread" should not run its own loops and instead periodically
+ * check for interuption signals.
+ * 
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
- * @see Callable
  */
-class Fiber extends BaseJob
+abstract class Fiber extends BaseJob
 {
-
+	public function work()
+	{
+		# code...
+	}
 }

@@ -35,13 +35,10 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 
 /**
- * Enables the execution of a Callable as a Coroutine
- *
- * Why does this exist? What does this do?
+ * Why does this exist? What does this do????????
  *
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
- * @see Callable
  */
 class Defer extends BaseJob
 {

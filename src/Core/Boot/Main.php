@@ -32,7 +32,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 use Symfony\Component\Console as sfConsole;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
-abstract class AbstractMain
+abstract class Main
 {
 	/**
 	 * Returns the short command name for the component
@@ -53,5 +53,21 @@ abstract class AbstractMain
 
 	abstract function proccessEvent() /* ¯\_(ツ)_/¯ */;
 
+	/**
+	 * Should at least return 'default'
+	 *
+	 * @return string
+	 */
 	abstract public function getRunMode(): string;
+	abstract public function start(): int;
+
+	#---	
+
+	#---
+	public function log(string $sMsg)
+	{
+		Container::getDependency('sys.log')->log($sMsg,
+		['channel'=> get_called_class()]
+	);
+	}	
 }

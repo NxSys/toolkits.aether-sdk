@@ -37,10 +37,10 @@ src-docs/source/syscmds.rst -text
 src-docs/source/usage.rst -text
 src-docs/source/wacc.png -text
 src/Common.php -text
-src/Core/Boot/AbstractMain.php -text
 src/Core/Boot/BootExceptionType.php -text
 src/Core/Boot/Container.php -text
 src/Core/Boot/Executor.php -text
+src/Core/Boot/Main.php -text
 src/Core/Comms/BaseClient.php -text
 src/Core/Comms/BaseFactory.php -text
 src/Core/Comms/BaseListener.php -text
@@ -51,6 +51,7 @@ src/Core/Comms/IListener.php -text
 src/Core/Comms/ListenerFactory.php -text
 src/Core/Execution/Agent/BaseAgent.php -text
 src/Core/Execution/Agent/IAgent.php -text
+src/Core/Execution/IAgentModel.php -text
 src/Core/Execution/Job/Async.php -text
 src/Core/Execution/Job/BaseJob.php -text
 src/Core/Execution/Job/Coroutine.php -text

@@ -49,14 +49,6 @@ use Thread;
 abstract class BaseJob extends Thread implements IJob
 {
 	/**
-	 * mmmm
-	 */
-	public function setExternalRoutine(callable $hfRoutineTarget)
-	{
-		$this->_oTargetObject=(array) $hfRoutineTarget;
-	}
-
-	/**
 	 * Undocumented function
 	 *
 	 * @return mixed

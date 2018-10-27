@@ -35,15 +35,18 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 
 /**
- * Enables the execution of a Callable as a Coroutine
- *
- * Why does this exist? What does this do?
+ * Action based thread that executes the ::tick method based on 
+ * temporial criteria
  *
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  * @see Callable
+ * @see hrtime
  */
 class Timer extends Fiber
 {
-
+	public function tick()
+	{
+		# code...
+	}
 }

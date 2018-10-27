@@ -48,12 +48,15 @@ const DEFAULT_CONTAINER_FILE='aether.xml';
  * @throws NxSys\Toolkits\Aether\SDK\Core\Boot\BootExceptionType
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
-class Configurator
+class Container
 {
 	const DEFAULT_CONTAINER_FILE=DEFAULT_CONTAINER_FILE;
 
 	public $sBaseContainerFile;
 
+	/**
+	 * @var self
+	 */
 	static $oInstance;
 	public $oDIContainer;
 
@@ -93,12 +96,25 @@ class Configurator
 	}
 
 	/**
-	 * function getDependency
+	 * Get dependency
 	 * @param object
 	 */
-	static function getDependency($sSvcName)
+	static function getDependency(string $sSvcName)
 	{
 		return self::$oInstance->oDIContainer->get($sSvcName);
+	}
+
+	/**
+	 * Sets Dependency/Service
+	 *
+	 * @param string $sSvcName Name of service
+	 * @param object $oBj Service object
+	 * @return void
+	 */
+	static function setDependency(string $sSvcName, object $oBj): void
+	{
+		self::$oInstance->oDIContainer->set($sSvcName, $oBj);
+		return;
 	}
 
 	/**

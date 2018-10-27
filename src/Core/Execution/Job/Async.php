@@ -45,5 +45,12 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  */
 class Async extends BaseJob
 {
+	/**
+	 * mmmm
+	 */
+	public function setExternalRoutine(callable $hfRoutineTarget)
+	{
+		$this->_oTargetObject=(array) $hfRoutineTarget;
+	}
 
 }

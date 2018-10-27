@@ -36,7 +36,7 @@
     "require":
     {
         "php": "^7.2",
-        "monolog/monolog":              "~1.1",
+        "monolog/monolog":              "~1.22",
         "nette/neon":                   "~2.3",
         "nxsys/core":                   "*",
         "nxsys/library.bridges-sfconsole": "dev-master",
@@ -48,7 +48,8 @@
         "symfony/dependency-injection": "~3.0",
         "symfony/process":              "~3.0",
         "symfony/security-acl":         "~3.0",
-        "symfony/security-core":        "~3.0"
+        "symfony/security-core":        "~3.0",
+        "symfonette/neon-integration": "^1.0@dev"
     },
 	"suggest":
     {
