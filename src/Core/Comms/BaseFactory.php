@@ -38,7 +38,10 @@ use NxSys\Toolkits\Aether\SDK\Core;
  * @throws NxSys\Toolkits\Aether\SDK\Core\Comms\CommsExceptionType Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- abstract class BaseFactory
- {
-
- }
+abstract class BaseFactory
+{
+	public function addType()
+	{
+		# code...
+	}
+}

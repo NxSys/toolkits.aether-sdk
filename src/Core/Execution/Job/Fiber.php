@@ -38,14 +38,46 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  * Implements a nominally cooperativly scheduled thread.
  * IE this "thread" should not run its own loops and instead periodically
  * check for interuption signals.
- * 
+ *
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
 abstract class Fiber extends BaseJob
 {
-	public function work()
+	final public function start()
 	{
-		# code...
+		do
+		{
+			if(!$this->isSleep())
+			{
+				$this->work();
+			}
+			$bContinue=$this->isHalted();
+		}while(true===$bContinue);
+		return;
 	}
+
+	public function sleep($bStatus=true): bool
+	{
+		return $this->bIsSleep=$bStatus;
+	}
+
+	public function halt(): bool
+	{
+		return $this->bIsHalted=true;
+	}
+
+	protected function isSleep(): bool
+	{
+		return $this->bIsSleep;
+	}
+
+	protected function isHalted(): bool
+	{
+		return $this->bIsHalted;
+	}
+
+
+
+	protected abstract function work();
 }

@@ -29,6 +29,8 @@ use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Library Dependencies **/
 
+use NxSys\Core\ExtensibleSystemClasses\SPL\SplObjectStorage;
+// use SplObjectStorage
 
 /**
  * Undocumented class
@@ -40,5 +42,33 @@ use NxSys\Toolkits\Aether\SDK\Core;
  */
 abstract class BaseListener implements IListener
 {
-    
+	/**
+	 * @var SplObjectStorage
+	 */
+	public $hHandlerQueue;
+
+	/** @var string $sListenAddress listen interface */
+	public $sListenAddresss='127.0.0.1';
+	/** @var string $sListenPort description */
+	public $sListenPort;
+
+	/** @var array $aListenInterfaces [[ip, port]...] */
+	public $aListenInterfaces=[];
+
+	public function __construct()
+	{
+		$this->hHandlerQueue=new SplObjectStorage;
+	}
+	
+	public function configure(string $sListen)
+	{
+		# code...
+	}
+	
+	abstract public function listenLoop(): void;
+	
+	public function registerNewHandler(Callable $hHandler)
+	{
+		$this->hHandlerQueue->attach($hHandler);
+	}
 }

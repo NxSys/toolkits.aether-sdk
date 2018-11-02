@@ -83,7 +83,7 @@ class Executor extends sfConsole\Command\Command
 			->setName($this->sTargetShortname)
 			->addOption(ARG_CONFIG, ARG_CONFIG[0],
 						sfConsole\Input\InputOption::VALUE_OPTIONAL,
-						'alternative configuration root',
+						'alternative configuration root (xml)',
 						$this->sTargetShortname . '.xml');
 	}
 
@@ -109,6 +109,7 @@ class Executor extends sfConsole\Command\Command
 		
 		#start configured logger
 		//check to see if there are ACN Main exclusive configs
+		//@todo make Container agnostic
 		Container::boot($this->oInput->getOption(ARG_CONFIG));
 
 		Container::setDependency('sys.log', 

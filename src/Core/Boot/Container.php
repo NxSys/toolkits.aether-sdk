@@ -31,6 +31,8 @@ use NxSys\Toolkits\Aether\SDK\Core;
 use Symfony\Component\DependencyInjection as SfDI;
 use Symfony\Component\Config as sfConfig;
 
+use Symfonette\NeonIntegration\DependencyInjection\NeonFileLoader;
+
 /** System Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 use Throwable;
@@ -76,7 +78,7 @@ class Container
 	{
 		
 	}
-
+	
 	public function initContainers()
 	{
 		$container = new SfDI\ContainerBuilder();
@@ -87,7 +89,10 @@ class Container
 		//first ini files
 		$ini_loader = new SfDI\Loader\IniFileLoader($container, new sfConfig\FileLocator($search_paths));
 		##@todo
-		$ini_loader->load('..\config.sample.ini');
+		$ini_loader->load('../config.sample.ini');
+
+		$neon_loader = new NeonFileLoader($container, new sfConfig\FileLocator($search_paths));
+		$neon_loader->load('../config.neon');
 
 		//now xml files
 		$loader = new SfDI\Loader\XmlFileLoader($container, new sfConfig\FileLocator($search_paths));
