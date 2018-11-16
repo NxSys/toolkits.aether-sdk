@@ -32,7 +32,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 use Symfony\Component\Console as sfConsole;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
-abstract class Main
+abstract class Main implements Core\Boot\Event\EventListenerInterface
 {
 	/**
 	 * Returns the short command name for the component
@@ -51,7 +51,8 @@ abstract class Main
 		return;
 	}
 
-	abstract function proccessEvent() /* ¯\_(ツ)_/¯ */;
+	abstract function handleEvent(Core\Boot\Event\Event $oEvent) /* ¯\_(ツ)_/¯ */;
+	
 
 	/**
 	 * Should at least return 'default'
@@ -62,6 +63,9 @@ abstract class Main
 	abstract public function start(): int;
 
 	#---	
+
+
+
 
 	#---
 	public function log(string $sMsg)

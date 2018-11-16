@@ -44,18 +44,37 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  */
 abstract class Fiber extends BaseJob
 {
-	final public function start()
+	public $bIsSleep=false;
+	public $bIsHalted=false;
+
+	final public function run()
 	{
+		echo "Fiber start";
+		$this->onStartup();
+		var_dump($this->isRunning());
 		do
 		{
 			if(!$this->isSleep())
 			{
-				$this->work();
+				try
+				{
+					echo "Begin work";
+					$this->work();
+				}
+				catch (\Throwable $e)
+				{
+					print $this->showException($e);
+					$this->setException($e);
+				}
 			}
 			$bContinue=$this->isHalted();
 		}while(true===$bContinue);
+		$this->onShutdown();
 		return;
 	}
+
+	public function onStartup() {}
+	public function onShutdown() {}
 
 	public function sleep($bStatus=true): bool
 	{
@@ -69,12 +88,12 @@ abstract class Fiber extends BaseJob
 
 	protected function isSleep(): bool
 	{
-		return $this->bIsSleep;
+		return (bool)$this->bIsSleep;
 	}
 
 	protected function isHalted(): bool
 	{
-		return $this->bIsHalted;
+		return (bool)$this->bIsHalted;
 	}
 
 

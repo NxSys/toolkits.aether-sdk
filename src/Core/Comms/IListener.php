@@ -42,4 +42,7 @@ interface IListener
 {
 
 	function registerNewHandler(Callable $hHandler);
+	function listenLoop();
+	function registerLoopHandler(Callable $hHandler);
+
 }

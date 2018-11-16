@@ -35,6 +35,7 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 //....
 use Thread;
+use Exception;
 
 
 /**
@@ -70,4 +71,38 @@ abstract class BaseJob extends Thread implements IJob
 		return (string)$this->getReturn();
 	}
 
+	public function setException(\Throwable $e)
+	{
+		// $this->oException=$e;
+	}
+
+	public function getException(): \Throwable
+	{
+		return $this->oException;
+	}
+
+	public function showException($e, $iNest=0)
+	{
+		$excode=$e->getCode();
+		$exmsg=$e->getMessage();
+
+		if(property_exists($e,'xdebug_message'))
+		{
+			echo $e->xdebug_message."\n";
+		}
+
+		$sMsg=sprintf('Exception %s: %s (C:%d) in %s on line %d'.PHP_EOL,
+					  get_class($e),$exmsg,$excode,$e->getFile(),$e->getLine());
+
+		if($iNest)
+		{
+			$sMsg=str_repeat(' ', $iNest).'\->'.$sMsg;
+		}
+		// $this->log($sMsg, $oCurrConnection, Logger::ERROR);
+		if($e->getPrevious())
+		{
+			$this->showException( $e->getPrevious(), $iNest+1);
+		}
+		return $sMsg;
+	}
 }

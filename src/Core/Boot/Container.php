@@ -92,7 +92,7 @@ class Container
 		$ini_loader->load('../config.sample.ini');
 
 		$neon_loader = new NeonFileLoader($container, new sfConfig\FileLocator($search_paths));
-		$neon_loader->load('../config.neon');
+		// $neon_loader->load('../config.neon'); @todo Something
 
 		//now xml files
 		$loader = new SfDI\Loader\XmlFileLoader($container, new sfConfig\FileLocator($search_paths));

@@ -42,7 +42,7 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- interface IJob extends CoreEsc\pthreads\IThread
+ interface IJob 
  {
 
  }

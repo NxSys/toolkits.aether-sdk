@@ -57,7 +57,7 @@ abstract class BaseListener implements IListener
 
 	public function __construct()
 	{
-		$this->hHandlerQueue=new SplObjectStorage;
+		// $this->hHandlerQueue=new SplObjectStorage;
 	}
 	
 	public function configure(string $sListen)

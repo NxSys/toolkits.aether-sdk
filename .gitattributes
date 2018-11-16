@@ -39,6 +39,10 @@ src-docs/source/wacc.png -text
 src/Common.php -text
 src/Core/Boot/BootExceptionType.php -text
 src/Core/Boot/Container.php -text
+src/Core/Boot/Event/Event.php -text
+src/Core/Boot/Event/EventListenerInterface.php -text
+src/Core/Boot/Event/EventManager.php -text
+src/Core/Boot/Event/EventQueue.php -text
 src/Core/Boot/Executor.php -text
 src/Core/Boot/Main.php -text
 src/Core/Comms/BaseClient.php -text
@@ -49,9 +53,11 @@ src/Core/Comms/CommsExecptionType.php -text
 src/Core/Comms/IClient.php -text
 src/Core/Comms/IListener.php -text
 src/Core/Comms/ListenerFactory.php -text
+src/Core/Comms/ListenerHostFiber.php -text
 src/Core/Execution/Agent/BaseAgent.php -text
 src/Core/Execution/Agent/IAgent.php -text
 src/Core/Execution/IAgentModel.php -text
+src/Core/Execution/IException.php -text
 src/Core/Execution/Job/Async.php -text
 src/Core/Execution/Job/BaseJob.php -text
 src/Core/Execution/Job/Coroutine.php -text
