@@ -51,6 +51,7 @@ class Event
     {
         $this->sChannel = $sChannel;
         $this->sEvent = $sEvent;
+        $this->aData = $aData;
     }
 
     public function getChannel(): string

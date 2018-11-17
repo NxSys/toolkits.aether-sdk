@@ -7,9 +7,9 @@ interface EventListenerInterface
 {
 	public function handleEvent(Event $oEvent);
 
-	static function getChannels() : array;
+	public function getChannels() : array;
 
-	static function getEvents() : array;
+	public function getEvents() : array;
 
-	static function getPriority() : int;
+	public function getPriority() : int;
 }

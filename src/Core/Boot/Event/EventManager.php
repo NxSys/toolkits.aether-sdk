@@ -40,6 +40,7 @@ class EventManager
     public function __construct()
     {
         $this->oEventQueue = new EventQueue();
+        $this->oEventQueue->run();
         $this->aChannels = [];
         $this->aEvents = [];
     }
@@ -51,13 +52,13 @@ class EventManager
         if (count($aChannels) == 0)
         {
             //Wildcard channel
-            $this->aChannels[-1] =& $oListener;
+            $this->aChannels[-1][] =& $oListener;
         }
         else
         {
             foreach ($aChannels as $sChannel)
             {
-                $this->aChannels[$sChannel] =& $oListener;
+                $this->aChannels[$sChannel][] =& $oListener;
             }
         }
 
@@ -66,19 +67,24 @@ class EventManager
         if (count($aEvents) == 0)
         {
             //Wildcard event
-            $this->aEvents[-1] =& $oListener;
+            $this->aEvents[-1][] =& $oListener;
         }
         else
         {
             foreach ($aEvents as $sEvent)
             {
-                $this->aEvents[$sEvent] =& $oListener;
+                $this->aEvents[$sEvent][] =& $oListener;
             }
         }
+
     }
 
     public function processEvent()
     {
+        if (!$this->oEventQueue->hasEvents())
+        {
+            return;
+        }
         //Get next event to process (should remove from queue)
         $oEvent = $this->oEventQueue->next();
 
@@ -89,11 +95,14 @@ class EventManager
 
         $sChannel = $oEvent->getChannel();
         $sEvent = $oEvent->getChannel();
+
+        $aChannels = $this->aChannels;
+        $aEvents = $this->aEvents;
         
         //Get listeners for the given channel.
-        if (array_key_exists($sChannel, $this->aChannels))
+        if (array_key_exists($sChannel, $aChannels))
         {
-            $aChannelListeners = $this->aChannels[$sChannel];
+            $aChannelListeners = $aChannels[$sChannel];
         }
         else
         {
@@ -101,9 +110,9 @@ class EventManager
         }
 
         //Get listeners for the given event type.
-        if (array_key_exists($sEvent, $this->aEvents))
+        if (array_key_exists($sEvent, $aEvents))
         {
-            $aEventListeners = $this->aEvents[$sEvent];
+            $aEventListeners = $aEvents[$sEvent];
         }
         else
         {
@@ -132,7 +141,7 @@ class EventManager
             }
         }
 
-        foreach($this->aChannels[-1] as $oListener)
+        foreach($aChannels[-1] as $oListener)
         {
             if (count($oListener->getEvents()) == 0) //Global listeners
             {
@@ -154,9 +163,15 @@ class EventManager
         }
     }
 
-    public function addEvent(Event\Event $oEvent)
+    public function addEvent(Event $oEvent)
     {
         //Any thread handling code goes here.
+        // var_dump("Add event", $oEvent);
         $this->oEventQueue->add($oEvent);
+    }
+
+    public function getQueue() : EventQueue
+    {
+        return $this->oEventQueue;
     }
 }

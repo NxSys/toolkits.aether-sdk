@@ -34,7 +34,10 @@ use NxSys\Toolkits\Aether\SDK\Core;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 //....
+use ArrayObject;
+use ArrayIterator;
 use Thread;
+use Stackable;
 use Exception;
 
 
@@ -49,6 +52,12 @@ use Exception;
 // abstract class BaseJob extends CoreEsc\pthreads\Thread implements IJob
 abstract class BaseJob extends Thread implements IJob
 {
+	public function __construct()
+	{
+		$this->aInData=new ArrayIterator ;
+		$this->aOutData=new ArrayIterator ;
+	}
+
 	/**
 	 * Undocumented function
 	 *
@@ -66,10 +75,72 @@ abstract class BaseJob extends Thread implements IJob
 		return $this->return;
 	}
 
+	protected function setReturn($mValue)
+	{
+		return $this->return=$mValue;
+	}
+
 	public function __tostring(): string
 	{
 		return (string)$this->getReturn();
 	}
+
+	protected function pushOut($mValue)
+	{
+		//@todo enforce simple serilization
+		array_push($this->aOutData, $mValue);
+		return;
+	}
+	public function popOut()
+	{
+		return array_pop($this->aOutData);
+	}
+	protected function unshiftOut($mValue)
+	{
+		array_unshift($this->aOutData, $mValue);
+	}
+	public function shiftOut()
+	{
+		array_shift($this->aOutData);
+	}
+	#---
+	public function pushIn($mValue)
+	{
+		// printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
+		// var_dump($mValue);
+		//@todo enforce simple serilization
+		$a=$this->aInData;
+		$a->append($mValue);
+		// var_dump($a);
+		$this->aInData = $a;
+		// var_dump($this->aInData);
+		return;
+	}
+	protected function popIn()
+	{
+		return array_pop($this->aInData);
+	}
+	public function unshiftIn($mValue)
+	{
+		array_unshift($this->aInData, $mValue);
+	}
+	protected function shiftIn()
+	{
+		// printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
+		// var_dump("ShiftIn");
+		// var_dump($this->aInData);
+		$aTemp=$this->aInData->getArrayCopy();
+		if (count($aTemp) == 0)
+		{
+			return null;
+		}
+		$ret = array_shift($aTemp);
+		// var_dump($aTemp);
+		$this->aInData->offsetUnset(0);
+		// var_dump($this->aInData);
+		return $ret;
+	}
+
 
 	public function setException(\Throwable $e)
 	{
