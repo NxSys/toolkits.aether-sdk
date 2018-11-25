@@ -34,8 +34,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
 //....
-use ArrayObject;
-use ArrayIterator;
+use SplQueue;
 use Thread;
 use Stackable;
 use Exception;
@@ -54,8 +53,8 @@ abstract class BaseJob extends Thread implements IJob
 {
 	public function __construct()
 	{
-		$this->aInData=new ArrayIterator ;
-		$this->aOutData=new ArrayIterator ;
+		$this->aInData=new SplQueue ;
+		$this->aOutData=new SplQueue ;
 	}
 
 	/**
@@ -110,7 +109,7 @@ abstract class BaseJob extends Thread implements IJob
 		// var_dump($mValue);
 		//@todo enforce simple serilization
 		$a=$this->aInData;
-		$a->append($mValue);
+		$a->enqueue($mValue);
 		// var_dump($a);
 		$this->aInData = $a;
 		// var_dump($this->aInData);
@@ -129,14 +128,14 @@ abstract class BaseJob extends Thread implements IJob
 		// printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
 		// var_dump("ShiftIn");
 		// var_dump($this->aInData);
-		$aTemp=$this->aInData->getArrayCopy();
+		$aTemp=$this->aInData;
 		if (count($aTemp) == 0)
 		{
 			return null;
 		}
-		$ret = array_shift($aTemp);
+		$ret = $aTemp->dequeue();
 		// var_dump($aTemp);
-		$this->aInData->offsetUnset(0);
+		$this->aInData = $aTemp;
 		// var_dump($this->aInData);
 		return $ret;
 	}
@@ -152,7 +151,7 @@ abstract class BaseJob extends Thread implements IJob
 		return $this->oException;
 	}
 
-	public function showException($e, $iNest=0)
+	public function showException(Exception $e, $iNest=0)
 	{
 		$excode=$e->getCode();
 		$exmsg=$e->getMessage();
@@ -174,6 +173,8 @@ abstract class BaseJob extends Thread implements IJob
 		{
 			$this->showException( $e->getPrevious(), $iNest+1);
 		}
+		sprintf('Outer Stack Trace:');
+		sprintf($e->getTraceAsString());
 		return $sMsg;
 	}
 }

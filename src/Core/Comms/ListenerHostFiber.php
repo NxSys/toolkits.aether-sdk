@@ -4,7 +4,7 @@ namespace NxSys\Toolkits\Aether\SDK\Core\Comms;
 
 use NxSys\Toolkits\Aether\SDK\Core;
 
-class ListenerHostFiber extends Core\Execution\Job\Fiber implements Core\Boot\Event\EventListenerInterface
+class ListenerHostFiber extends Core\Execution\Job\Fiber implements Core\Boot\Event\EventHandlerInterface
 {
 	public $aThreadData=[];
 
@@ -18,9 +18,9 @@ class ListenerHostFiber extends Core\Execution\Job\Fiber implements Core\Boot\Ev
 
 	public function work()
 	{
-		echo 'Doing work';
+		echo "Doing work>>>>\n";
 		$this->oListener->listenLoop();	
-		echo 'Done work';
+		echo "<<<<Done work";
 	}
 
 	public function onStartup()

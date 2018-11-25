@@ -3,7 +3,7 @@
 namespace NxSys\Toolkits\Aether\SDK\Core\Boot\Event;
 
 
-interface EventListenerInterface
+interface EventHandlerInterface
 {
 	public function handleEvent(Event $oEvent);
 

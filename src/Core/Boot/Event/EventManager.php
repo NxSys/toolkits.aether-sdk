@@ -33,7 +33,6 @@ use NxSys\Toolkits\Aether\SDK\Core;
 /** System Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 use Throwable;
-use NxSys\Core\ExtensibleSystemClasses\standard\__PHP_Incomplete_Class;
 
 class EventManager
 {
@@ -41,39 +40,39 @@ class EventManager
     {
         $this->oEventQueue = new EventQueue();
         $this->oEventQueue->run();
-        $this->aChannels = [];
-        $this->aEvents = [];
+        $this->aChannels = [-1 => []];
+        $this->aEvents = [-1 => []];
     }
 
-    public function addListener(EventListenerInterface $oListener)
+    public function addHandler(EventHandlerInterface $oHandler)
     {
-        $aChannels = $oListener->getChannels();
+        $aChannels = $oHandler->getChannels();
         
         if (count($aChannels) == 0)
         {
             //Wildcard channel
-            $this->aChannels[-1][] =& $oListener;
+            $this->aChannels[-1][] =& $oHandler;
         }
         else
         {
             foreach ($aChannels as $sChannel)
             {
-                $this->aChannels[$sChannel][] =& $oListener;
+                $this->aChannels[$sChannel][] =& $oHandler;
             }
         }
 
-        $aEvents = $oListener->getEvents();
+        $aEvents = $oHandler->getEvents();
 
         if (count($aEvents) == 0)
         {
             //Wildcard event
-            $this->aEvents[-1][] =& $oListener;
+            $this->aEvents[-1][] =& $oHandler;
         }
         else
         {
             foreach ($aEvents as $sEvent)
             {
-                $this->aEvents[$sEvent][] =& $oListener;
+                $this->aEvents[$sEvent][] =& $oHandler;
             }
         }
 
@@ -88,7 +87,7 @@ class EventManager
         //Get next event to process (should remove from queue)
         $oEvent = $this->oEventQueue->next();
 
-        $aListenerQueues = [0 => [], //Event + Channel specified
+        $aHandlerQueues = [0 => [], //Event + Channel specified
                             1 => [], //Event specified, Channel wildcard
                             2 => [], //Event wildcard, Channel specified
                             3 => []];//Event + Channel wildcard
@@ -99,66 +98,66 @@ class EventManager
         $aChannels = $this->aChannels;
         $aEvents = $this->aEvents;
         
-        //Get listeners for the given channel.
+        //Get handlers for the given channel.
         if (array_key_exists($sChannel, $aChannels))
         {
-            $aChannelListeners = $aChannels[$sChannel];
+            $aChannelHandlers = $aChannels[$sChannel];
         }
         else
         {
-            $aChannelListeners = [];
+            $aChannelHandlers = [];
         }
 
-        //Get listeners for the given event type.
+        //Get handlers for the given event type.
         if (array_key_exists($sEvent, $aEvents))
         {
-            $aEventListeners = $aEvents[$sEvent];
+            $aEventHandlers = $aEvents[$sEvent];
         }
         else
         {
-            $aEventListeners = [];
+            $aEventHandlers = [];
         }
 
-        //Categorize listeners by specificity
-        foreach ($aEventListeners as $oListener)
+        //Categorize handlers by specificity
+        foreach ($aEventHandlers as $oHandler)
         {
-            if (array_search($sChannel, $oListener->getChannels())) //Specific Event+Channel
+            if (array_search($sChannel, $oHandler->getChannels())) //Specific Event+Channel
             {
-                $aListenerQueues[0][] =& $oListener;
+                $aHandlerQueues[0][] =& $oHandler;
             }
-            elseif (count($oListener->getChannels()) == 0) //Specfic Event, Wildcard Channel
+            elseif (count($oHandler->getChannels()) == 0) //Specfic Event, Wildcard Channel
             {
-                $aListenerQueues[1][] =& $oListener;
+                $aHandlerQueues[1][] =& $oHandler;
             }
         }
 
-        foreach ($aChannelListeners as $oListener)
+        foreach ($aChannelHandlers as $oHandler)
         {
             //Specific channel + specific event already handled above, so just check specific channel + wildcard event
-            if (count($oListener->getEvents()) == 0)
+            if (count($oHandler->getEvents()) == 0)
             {
-                $aListenerQueues[2][] =& $oListener;
+                $aHandlerQueues[2][] =& $oHandler;
             }
         }
 
-        foreach($aChannels[-1] as $oListener)
+        foreach($aChannels[-1] as $oHandler)
         {
-            if (count($oListener->getEvents()) == 0) //Global listeners
+            if (count($oHandler->getEvents()) == 0) //Global handlers
             {
-                $aListenerQueues[3][] =& $oListener;
+                $aHandlerQueues[3][] =& $oHandler;
             }
         }
 
-        //Loop through listeners and notify.
-        foreach ($aListenerQueues as $aListenerQueue)
+        //Loop through handlers and notify.
+        foreach ($aHandlerQueues as $aHandlerQueue)
         {
             //Sort by priority
-            usort($aListenerQueue, function ($a, $b) {return $a->getPriority() <=> $b->getPriority();});
+            usort($aHandlerQueue, function ($a, $b) {return $a->getPriority() <=> $b->getPriority();});
 
-            foreach ($aListenerQueue as $oListener)
+            foreach ($aHandlerQueue as $oHandler)
             {
                 //Notify listener.
-                $oListener->handleEvent($oEvent);
+                $oHandler->handleEvent($oEvent);
             }
         }
     }

@@ -32,7 +32,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 use Symfony\Component\Console as sfConsole;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
-abstract class Main implements Core\Boot\Event\EventListenerInterface
+abstract class Main implements Core\Boot\Event\EventHandlerInterface
 {
 	/**
 	 * Returns the short command name for the component

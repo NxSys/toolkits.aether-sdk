@@ -40,9 +40,11 @@ src/Common.php -text
 src/Core/Boot/BootExceptionType.php -text
 src/Core/Boot/Container.php -text
 src/Core/Boot/Event/Event.php -text
-src/Core/Boot/Event/EventListenerInterface.php -text
+src/Core/Boot/Event/EventHandlerInterface.php -text
 src/Core/Boot/Event/EventManager.php -text
+src/Core/Boot/Event/EventManagerFactory.php -text
 src/Core/Boot/Event/EventQueue.php -text
+src/Core/Boot/Event/PassthroughEventHandler.php -text
 src/Core/Boot/Executor.php -text
 src/Core/Boot/Main.php -text
 src/Core/Comms/BaseClient.php -text
