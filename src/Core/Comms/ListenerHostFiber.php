@@ -55,10 +55,13 @@ class ListenerHostFiber extends Core\Execution\Job\Fiber implements Core\Boot\Ev
 
 	public function handleEvent(Core\Boot\Event\Event $oEvent)
 	{
-		// $this->oListener->
 		//printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __METHOD__, __LINE__);
+		//var_dump($this->getThreadId());
 		//var_dump($oEvent->getEvent());
+		
 		$this->pushIn(($oEvent));
+		//var_dump($this->oListener::$oThruwayHandler->aTerminals);
+		//$this->oListener->processEvents($this->oListener::$oThruwayHandler);
 	}
 	public function getInEvent()
 	{

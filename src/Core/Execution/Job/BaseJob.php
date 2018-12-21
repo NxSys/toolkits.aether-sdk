@@ -51,10 +51,31 @@ use Exception;
 // abstract class BaseJob extends CoreEsc\pthreads\Thread implements IJob
 abstract class BaseJob extends Thread implements IJob
 {
+	protected $aLocalConstants = [];
 	public function __construct()
 	{
 		$this->aInData=new SplQueue ;
 		$this->aOutData=new SplQueue ;
+	}
+
+	public function setupConstants(array $aConstants): void
+	{
+		foreach ($aConstants as $name)
+		{
+			$this->aLocalConstants[$name]=constant($name);
+		}
+		return;
+	}
+
+	public function initConstants(): void
+	{
+		foreach ($this->aLocalConstants as $name => $value)
+		{
+			if (!defined($name))
+			{
+				define($name, $value);
+			}
+		}
 	}
 
 	/**
@@ -138,6 +159,16 @@ abstract class BaseJob extends Thread implements IJob
 		$this->aInData = $aTemp;
 		// var_dump($this->aInData);
 		return $ret;
+	}
+
+	public function hasIn()
+	{
+		return count($this->aInData) > 0;
+	}
+
+	public function hasOut()
+	{
+		return count($this->aOutData) > 0;
 	}
 
 

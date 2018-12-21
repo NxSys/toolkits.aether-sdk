@@ -50,6 +50,7 @@ abstract class Fiber extends BaseJob
 	final public function run()
 	{
 		echo "Fiber start";
+		$this->initConstants();
 		$this->onStartup();
 		var_dump($this->isRunning());
 		do

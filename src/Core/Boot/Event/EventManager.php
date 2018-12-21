@@ -80,10 +80,12 @@ class EventManager
 
     public function processEvent()
     {
+       
         if (!$this->oEventQueue->hasEvents())
         {
             return;
         }
+        printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __METHOD__, __LINE__);
         //Get next event to process (should remove from queue)
         $oEvent = $this->oEventQueue->next();
 
@@ -123,11 +125,11 @@ class EventManager
         {
             if (array_search($sChannel, $oHandler->getChannels())) //Specific Event+Channel
             {
-                $aHandlerQueues[0][] =& $oHandler;
+                $aHandlerQueues[0][] = $oHandler;
             }
             elseif (count($oHandler->getChannels()) == 0) //Specfic Event, Wildcard Channel
             {
-                $aHandlerQueues[1][] =& $oHandler;
+                $aHandlerQueues[1][] = $oHandler;
             }
         }
 
@@ -136,7 +138,7 @@ class EventManager
             //Specific channel + specific event already handled above, so just check specific channel + wildcard event
             if (count($oHandler->getEvents()) == 0)
             {
-                $aHandlerQueues[2][] =& $oHandler;
+                $aHandlerQueues[2][] = $oHandler;
             }
         }
 
@@ -144,7 +146,7 @@ class EventManager
         {
             if (count($oHandler->getEvents()) == 0) //Global handlers
             {
-                $aHandlerQueues[3][] =& $oHandler;
+                $aHandlerQueues[3][] = $oHandler;
             }
         }
 
@@ -153,7 +155,6 @@ class EventManager
         {
             //Sort by priority
             usort($aHandlerQueue, function ($a, $b) {return $a->getPriority() <=> $b->getPriority();});
-
             foreach ($aHandlerQueue as $oHandler)
             {
                 //Notify listener.

@@ -80,7 +80,11 @@ class Event
 
     public function __get($sProp)
     {
-        return $this->aData[$sProp];
+        if (array_key_exists($sProp, $this->aData))
+        {
+            return $this->aData[$sProp];
+        }
+        return null;
     }
 
     public function __set($sProp, $mVal)
