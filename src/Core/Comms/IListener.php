@@ -43,6 +43,7 @@ interface IListener
 
 	function registerNewHandler(Callable $hHandler);
 	function listenLoop();
-	function registerLoopHandler(Callable $hHandler);
 	function processEvents();
+	function setThreadContext(Core\Comms\ListenerHostFiber $oThread);
+	function getThreadContext(): Core\Comms\ListenerHostFiber;
 }

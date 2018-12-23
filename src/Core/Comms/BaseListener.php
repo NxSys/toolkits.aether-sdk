@@ -31,6 +31,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 
 use NxSys\Core\ExtensibleSystemClasses\SPL\SplObjectStorage;
 // use SplObjectStorage
+use Threaded;
 
 /**
  * Undocumented class
@@ -40,8 +41,13 @@ use NxSys\Core\ExtensibleSystemClasses\SPL\SplObjectStorage;
  * @throws NxSys\Toolkits\Aether\SDK\Core\Comms\CommsExceptionType Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
-abstract class BaseListener extends \Threaded implements IListener
+abstract class BaseListener extends Threaded implements IListener
 {
+	/**
+	 * @var Core\Execution\Job\Fiber
+	 */
+	public $oThreadContext;
+
 	/**
 	 * @var SplObjectStorage
 	 */
@@ -66,9 +72,23 @@ abstract class BaseListener extends \Threaded implements IListener
 	}
 	
 	abstract public function listenLoop(): void;
+
+	abstract public function processEvents(): void;
+
 	
 	public function registerNewHandler(Callable $hHandler)
 	{
 		$this->hHandlerQueue->attach($hHandler);
 	}
+
+	public function setThreadContext(Core\Comms\ListenerHostFiber $oThread)
+	{
+		$this->oThreadContext = $oThread;
+	}
+
+	public function getThreadContext(): Core\Comms\ListenerHostFiber
+	{
+		return $this->oThreadContext;
+	}
+
 }

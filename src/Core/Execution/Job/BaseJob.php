@@ -38,6 +38,7 @@ use SplQueue;
 use Thread;
 use Stackable;
 use Exception;
+use Throwable;
 
 
 /**
@@ -69,6 +70,7 @@ abstract class BaseJob extends Thread implements IJob
 
 	public function initConstants(): void
 	{
+
 		foreach ($this->aLocalConstants as $name => $value)
 		{
 			if (!defined($name))
@@ -172,17 +174,17 @@ abstract class BaseJob extends Thread implements IJob
 	}
 
 
-	public function setException(\Throwable $e)
+	public function setException(Throwable $e)
 	{
 		// $this->oException=$e;
 	}
 
-	public function getException(): \Throwable
+	public function getException(): Throwable
 	{
 		return $this->oException;
 	}
 
-	public function showException(Exception $e, $iNest=0)
+	public function showException(Throwable $e, $iNest=0)
 	{
 		$excode=$e->getCode();
 		$exmsg=$e->getMessage();
