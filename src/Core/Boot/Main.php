@@ -41,7 +41,7 @@ abstract class Main implements Core\Boot\Event\EventHandlerInterface
 	abstract public function getShortName(): string;
 
 	/**
-	 * Allows an simple overide to process any startup options/events 
+	 * Allows an simple overide to process any startup options/events
 	 * which Executor doesn't handle
 	 *
 	 * @return void
@@ -52,7 +52,7 @@ abstract class Main implements Core\Boot\Event\EventHandlerInterface
 	}
 
 	abstract function handleEvent(Core\Boot\Event\Event $oEvent) /* ¯\_(ツ)_/¯ */;
-	
+
 
 	/**
 	 * Should at least return 'default'
@@ -62,16 +62,17 @@ abstract class Main implements Core\Boot\Event\EventHandlerInterface
 	abstract public function getRunMode(): string;
 	abstract public function start(): int;
 
-	#---	
+	#---
 
 
 
 
 	#---
-	public function log(string $sMsg)
+	public function log(string $sMsg, array $context=[])
 	{
-		Container::getDependency('sys.log')->log($sMsg,
-		['channel'=> get_called_class()]
-	);
-	}	
+		Container::getDependency('sys.log')->log($sMsg
+			, $context
+			// ,['from'=> get_called_class()]
+		);
+	}
 }

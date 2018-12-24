@@ -29,7 +29,8 @@ use NxSys\Toolkits\Aether\SDK\Core;
 
 /** Library Dependencies **/
 use Symfony\Component\Console as sfConsole;
-use Monolog\Logger;
+use Monolog,
+	Monolog\Logger;
 
 /** System Dependencies **/
 use Throwable;
@@ -39,8 +40,8 @@ const ARG_CONFIG='config';
 /**
  * Configures and Executes Aether component
  *
- * We'll use this to allocate resources, pull config, 
- * and initialize & launch the module.
+ * We'll use this to allocate resources, pull config,
+ * and initialize & launch the module (an ACN or a RCE).
  *
  * @throws NxSys\Toolkits\Aether\SDK\Core\Boot\BootExceptionType Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
@@ -100,23 +101,36 @@ class Executor extends sfConsole\Command\Command
 		$this->oOutput = $oPut;
 		$this->oLogger = new Logger(strtoupper($this->sTargetShortname));
 		$iRet=0;
-		#start console logging
+
+		//start console logging
+		#this is the bog standard ML logger
+		$oLogHandler=new Monolog\Handler\StreamHandler('php://stderr', Logger::DEBUG); //@todo us sFCon for output
+		$oFmttr=new Monolog\Formatter\LineFormatter;
+		// $oFmttr-> @todo streplace \\ with \
+		$oLogHandler->setFormatter($oFmttr);
+		$this->oLogger->pushHandler($oLogHandler);
+		// $this->oLogger->pushProcessor(new Monolog\Processor\HostnameProcessor); ML v2
+		$this->oLogger->pushProcessor(new Monolog\Processor\ProcessIdProcessor);
+		$this->oLogger->pushProcessor(new Monolog\Processor\MemoryPeakUsageProcessor);
+		$this->oLogger->pushProcessor(new Monolog\Processor\MemoryUsageProcessor);
+		// $this->oLogger->pushProcessor(new Monolog\Processor\IntrospectionProcessor(Logger::DEBUG, [], 3));
+
 		//do allocation & resource checking
 			//disk space? mem? dynamic modules/phars?
 
 		//do config
 			//load config
-		
+
 		#start configured logger
 		//check to see if there are ACN Main exclusive configs
 		//@todo make Container agnostic
 		Container::boot($this->oInput->getOption(ARG_CONFIG));
 
-		Container::setDependency('sys.log', 
+		Container::setDependency('sys.log',
 			(new class ([$this, "log"]) //extends \Psr\Log\AbstractLogger
 			{
 				function __construct($oTarget)
-				{	
+				{
 					$this->oTarget=$oTarget;
 				}
 				function __call($sMethodName, $aArgs)
@@ -125,9 +139,10 @@ class Executor extends sfConsole\Command\Command
 					$oTarget(...$aArgs);
 				}
 
-			}) );
+			})
+		);
 
-		
+
 			//yes, yes affecting state would indeed be passed through the Container
 		$sRunMode = $this->oTarget->getRunMode();
 		switch ($sRunMode)
@@ -150,7 +165,7 @@ class Executor extends sfConsole\Command\Command
 		}
 		//finalization
 		#log output
-	
+
 		//deallocation/completion
 		return (int) $iRet;
 	}
@@ -164,7 +179,8 @@ class Executor extends sfConsole\Command\Command
 	 */
 	public function log($sMsg, ...$aOpts)
 	{
-		//$this->oOutput->writeln($aOpts[0]['channel'] . ': ' . $sMsg);
-		$this->oLogger->info($sMsg, $aOpts[0]);
+		//$this->oOutput->writeln($aOpts[0]['context'] . ': ' . $sMsg);
+
+		$this->oLogger->info($sMsg, $aOpts);
 	}
 }

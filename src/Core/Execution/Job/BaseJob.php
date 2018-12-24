@@ -133,9 +133,9 @@ abstract class BaseJob extends Thread implements IJob
 		//@todo enforce simple serilization
 		$a=$this->aInData;
 		$a->enqueue($mValue);
-		// var_dump($a);
+		// var_dump($a)
 		$this->aInData = $a;
-		// var_dump($this->aInData);
+		// var_dump($this->aInData)
 		return;
 	}
 	protected function popIn()
@@ -201,13 +201,12 @@ abstract class BaseJob extends Thread implements IJob
 		{
 			$sMsg=str_repeat(' ', $iNest).'\->'.$sMsg;
 		}
-		// $this->log($sMsg, $oCurrConnection, Logger::ERROR);
 		if($e->getPrevious())
 		{
 			$this->showException( $e->getPrevious(), $iNest+1);
 		}
-		sprintf('Outer Stack Trace:');
-		sprintf($e->getTraceAsString());
+		$sMsg.=sprintf('Outer Stack Trace:');
+		$sMsg.=sprintf($e->getTraceAsString());
 		return $sMsg;
 	}
 }

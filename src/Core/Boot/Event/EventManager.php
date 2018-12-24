@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * $BaseName$
  * $Id$
  *
@@ -47,7 +47,7 @@ class EventManager
     public function addHandler(EventHandlerInterface $oHandler)
     {
         $aChannels = $oHandler->getChannels();
-        
+
         if (count($aChannels) == 0)
         {
             //Wildcard channel
@@ -80,12 +80,12 @@ class EventManager
 
     public function processEvent()
     {
-       
+
         if (!$this->oEventQueue->hasEvents())
         {
             return;
         }
-        printf(">>>CHECKPOINT %s::%s:%s<<<", __CLASS__, __METHOD__, __LINE__);
+        printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
         //Get next event to process (should remove from queue)
         $oEvent = $this->oEventQueue->next();
 
@@ -99,7 +99,7 @@ class EventManager
 
         $aChannels = $this->aChannels;
         $aEvents = $this->aEvents;
-        
+
         //Get handlers for the given channel.
         if (array_key_exists($sChannel, $aChannels))
         {
