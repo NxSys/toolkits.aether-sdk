@@ -49,17 +49,17 @@ abstract class Fiber extends BaseJob
 
 	final public function run()
 	{
-		echo "Fiber start";
+		// echo "Fiber start";
 		$this->initConstants();
 		$this->onStartup();
-		var_dump($this->isRunning());
+		// var_dump($this->isRunning());
 		do
 		{
 			if(!$this->isSleep())
 			{
 				try
 				{
-					echo "Begin work";
+					// echo "Begin work";
 					$this->work();
 				}
 				catch (\Throwable $e)
@@ -68,8 +68,9 @@ abstract class Fiber extends BaseJob
 					$this->setException($e);
 				}
 			}
-			$bContinue=$this->isHalted();
-		}while(true===$bContinue);
+			$bContinue=!$this->isHalted();
+		}
+		while(true==$bContinue);
 		$this->onShutdown();
 		return;
 	}

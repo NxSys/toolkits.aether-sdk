@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * $BaseName$
  * $Id$
  *
@@ -43,7 +43,7 @@ const EVENT_PRIORITY_BELOWNORMAL    = 128;
 const EVENT_PRIORITY_IDLE           = 256;
 
 /**
- * 
+ *
  *
  * @throws NxSys\Toolkits\Aether\SDK\Core\Boot\BootExceptionType
  * @author Chris R. Feamster <cfeamster@f2developments.com>
@@ -59,7 +59,7 @@ class Event
 
     public $sChannel;
     public $sEvent;
-    protected $aData;
+    protected $aData=[];
 
     public function __construct(string $sChannel, string $sEvent, array $aData = [])
     {
@@ -90,5 +90,10 @@ class Event
     public function __set($sProp, $mVal)
     {
         $this->aData[$sProp] = $mVal;
-    }
+	}
+
+	public function getData(): array
+	{
+		return $this->aData;
+	}
 }

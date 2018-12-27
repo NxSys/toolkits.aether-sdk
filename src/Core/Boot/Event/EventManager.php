@@ -85,7 +85,7 @@ class EventManager
         {
             return;
         }
-        printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
+        // printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
         //Get next event to process (should remove from queue)
         $oEvent = $this->oEventQueue->next();
 
