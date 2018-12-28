@@ -36,6 +36,9 @@ src-docs/source/requirements.txt -text
 src-docs/source/syscmds.rst -text
 src-docs/source/usage.rst -text
 src-docs/source/wacc.png -text
+src/Command.php -text
+src/Command/ICommandException.php -text
+src/Command/UnknownCommandSignatureException.php -text
 src/Common.php -text
 src/Core/Boot/BootExceptionType.php -text
 src/Core/Boot/Container.php -text
@@ -69,6 +72,7 @@ src/Core/Execution/Job/IJob.php -text
 src/Core/Execution/Job/Timer.php -text
 src/Core/Execution/Supervisor.php -text
 src/Core/Execution/ThreadModel/Models.txt -text
+src/Core/ExecutionFrame.php -text
 src/Core/IException.php -text
 src/Core/Security/Integrity/BaseDecryptionStrategy.php -text
 src/Core/Security/Integrity/BaseEncryptionStrategy.php -text
