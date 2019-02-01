@@ -33,6 +33,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 /** System Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 use Throwable;
+use NxSys\Toolkits\Aether\SDK\Core\Boot\Container;
 
 class EventManager
 {
@@ -41,7 +42,9 @@ class EventManager
         $this->oEventQueue = new EventQueue();
         $this->oEventQueue->run();
         $this->aChannels = [-1 => []];
-        $this->aEvents = [-1 => []];
+		$this->aEvents = [-1 => []];
+		$this->oLogger=Container::getDependency('sys.log');
+		$this->oLogger->info('EventManager: Event manager instantiated', []);
     }
 
     public function addHandler(EventHandlerInterface $oHandler)
@@ -89,7 +92,7 @@ class EventManager
         //Get next event to process (should remove from queue)
         $oEvent = $this->oEventQueue->next();
 
-        $aHandlerQueues = [0 => [], //Event + Channel specified
+        $aHandlerQueues = [	0 => [], //Event + Channel specified
                             1 => [], //Event specified, Channel wildcard
                             2 => [], //Event wildcard, Channel specified
                             3 => []];//Event + Channel wildcard
@@ -158,7 +161,14 @@ class EventManager
             foreach ($aHandlerQueue as $oHandler)
             {
                 //Notify listener.
+                $iExecutionTime = -microtime(true);
                 $oHandler->handleEvent($oEvent);
+                $iExecutionTime += microtime(true);
+
+                if ($iExecutionTime > 0.1) //100ms
+                {
+                    $this->oLogger->warn('EventManager: Event process taking too long.', ["time" => $iExecutionTime, "event" => $oEvent, "handler" => get_class($oHandler)]);
+                }
             }
         }
     }
