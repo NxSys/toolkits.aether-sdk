@@ -41,7 +41,7 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- class BaseAgent extends CoreEsc\pthreads\Worker extends CoreEsc\pthreads\IAgent
+ class BaseAgent extends BaseJob implements IAgent
  {
 
  }
