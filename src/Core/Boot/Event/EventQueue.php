@@ -33,7 +33,8 @@ class EventQueue extends Threaded
 
 	public function hasEvents(): bool
 	{
-		if ($this->aQueue->isEmpty())
+		$q=$this->aQueue;
+		if ($q->isEmpty())
 		{
 			return false;
 		}
@@ -50,7 +51,7 @@ class EventQueue extends Threaded
 	}
 }
 
-class EventQueueArray extends SplQueue 
+class EventQueueArray extends SplQueue
 {
-	
+
 }

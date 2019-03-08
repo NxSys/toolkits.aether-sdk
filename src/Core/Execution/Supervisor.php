@@ -25,6 +25,7 @@ use NxSys\Toolkits\Aether\SDK\Core;
 /** Library Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
+use Pool;
 
 /**
  * Undocumented class
@@ -36,7 +37,7 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- class Supervisor extends CoreEsc\pthreads\Pool
+ class Supervisor extends Pool //CoreEsc\pthreads\Pool
  {
 
  }
