@@ -22,13 +22,14 @@
  */
 
 /** @namespace Native Namespace */
-namespace NxSys\Toolkits\Aether\SDK\Core\Execution\Agents;
+namespace NxSys\Toolkits\Aether\SDK\Core\Execution\Agent;
 
 /** Local Project Dependencies **/
 use NxSys\Toolkits\Aether\SDK\Core;
+use NxSys\Toolkits\Aether\SDK\Core\Execution\Job\BaseJob;
 
 /** Framework Dependencies **/
-
+use Worker;
 
 /** Library Dependencies **/
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
@@ -41,7 +42,7 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
  * @throws NxSys\Toolkits\Aether\SDK\Core\IException Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
- class BaseAgent extends BaseJob implements IAgent
+ class BaseAgent extends Worker // implements IAgent
  {
 
  }

@@ -37,6 +37,8 @@ src-docs/source/syscmds.rst -text
 src-docs/source/usage.rst -text
 src-docs/source/wacc.png -text
 src/Command.php -text
+src/Command/BaseCommand.php -text
+src/Command/ICommand.php -text
 src/Command/ICommandException.php -text
 src/Command/UnknownCommandSignatureException.php -text
 src/Common.php -text
