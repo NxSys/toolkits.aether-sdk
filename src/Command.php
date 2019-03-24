@@ -3,13 +3,13 @@
  * 
  */
 
-namespace NxSys\Applications\Aether\SDK;
+namespace NxSys\Toolkits\Aether\SDK;
 
 use ReflectionClass,
 	ReflectionMethod;
 
 	
-use NxSys\Applications\Aether\SDK\Command\UnknownCommandSignatureException;
+use NxSys\Toolkits\Aether\SDK\Command\UnknownCommandSignatureException;
 
 /**
  * undocumented class
