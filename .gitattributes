@@ -74,6 +74,7 @@ src/Core/Execution/Job/IJob.php -text
 src/Core/Execution/Job/Timer.php -text
 src/Core/Execution/Supervisor.php -text
 src/Core/Execution/ThreadModel/Models.txt -text
+src/Core/Execution/WatchDog.php -text
 src/Core/ExecutionFrame.php -text
 src/Core/IException.php -text
 src/Core/Security/Integrity/BaseDecryptionStrategy.php -text

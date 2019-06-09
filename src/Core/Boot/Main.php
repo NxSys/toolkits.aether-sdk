@@ -32,8 +32,13 @@ use NxSys\Toolkits\Aether\SDK\Core;
 use Symfony\Component\Console as sfConsole;
 use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 
+use Thread;
+
 abstract class Main implements Core\Boot\Event\EventHandlerInterface
 {
+	/** @var Core\Execution\WatchDog $oWatchDog ThreadInspector */
+	protected $oWatchDog = null;
+
 	/**
 	 * Returns the short command name for the component
 	 * @return string Short command name
@@ -64,7 +69,28 @@ abstract class Main implements Core\Boot\Event\EventHandlerInterface
 
 	#---
 
-
+	public function registerThreadOnWatchdog(Thread $hThread)
+	{
+		if (!$this->oWatchDog)
+		{
+			$this->oWatchDog=new Core\Execution\WatchDog;
+		}
+		$this->oWatchDog->registerThread($hThread);
+		return;
+	}
+	/**
+	 * 
+	 * @return array of deadthread class names
+	 */
+	public function checkThreadWatchDog(): array
+	{
+		$errs=[];
+		foreach($this->oWatchDog->inspectThreads() as $problems)
+		{
+			$errs[]=get_class($problems);
+		}
+		return $errs;
+	}
 
 
 	#---
