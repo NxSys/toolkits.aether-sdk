@@ -1,12 +1,21 @@
 {
     "name": "nxsys/toolkits.aether-sdk",
     "description": "Aether.sh: Cloud Console SDK",
-    "keywords": ["distributed admin tool", "webshell", "webterminal", "shell", "terminal", "sdk"],
+    "keywords": [
+        "distributed admin tool",
+        "webshell",
+        "webterminal",
+        "shell",
+        "terminal",
+        "sdk"
+    ],
     "homepage": "http://nxsys.org/spaces/aether",
-    "license": ["AGPL-3.0-only", "proprietary"],
+    "license": [
+        "AGPL-3.0-only",
+        "proprietary"
+    ],
     "type": "project",
-    "support":
-    {
+    "support": {
         "docs": "https://man.aether.sh",
         "email": "onx@nxsysts.com",
         "chat": "https://onx.zulipchat.com",
@@ -15,9 +24,8 @@
         "wiki": "https://nxsys.assembla.com/spaces/aether/wiki",
         "source": "https://nxsys.assembla.com/spaces/aether/subversion/source",
         "rss": "https://nxsys.assembla.com/spaces/aether/stream.rss"
-     },
-    "authors":
-    [
+    },
+    "authors": [
         {
             "name": "Nexus Systems, Inc.",
             "homepage": "https://nexussystemsinc.com/about/foss-commitment.html",
@@ -25,39 +33,39 @@
             "role": "Dev Team"
         }
     ],
-    "config":
-    {
+    "config": {
         "optimize-autoloader": true
     },
-    "autoload":
-    {
-        "psr-4": { "NxSys\\Toolkits\\Aether\\SDK\\": "src/" }
+    "autoload": {
+        "psr-4": {
+            "NxSys\\Toolkits\\Aether\\SDK\\": "src/"
+        }
     },
-    "require":
-    {
+    "require": {
         "php": "^7.2",
-        "monolog/monolog":              "~1.24",
-        "nette/neon":                   "~2.3",
-        "nxsys/core":                   "*",
+        "monolog/monolog": "~1.24",
+        "nette/neon": "~2.3",
+        "nxsys/core": "*",
         "nxsys/library.bridges-sfconsole": "dev-master",
-        "phpseclib/phpseclib":          "~0.3",
-        "pimple/pimple":                "^3.0",
-        "react/zmq":                    "^0.3.0",
-        "symfony/config":               "~3.0",
-        "symfony/console":              "~3.0",
+        "phpseclib/phpseclib": "~0.3",
+        "pimple/pimple": "^3.0",
+        "symfony/config": "~3.0",
+        "symfony/console": "~3.0",
         "symfony/dependency-injection": "~3.0",
-        "symfony/process":              "~3.0",
-        "symfony/security-acl":         "~3.0",
-        "symfony/security-core":        "~3.0",
-        "symfonette/neon-integration": "^1.0@dev"
-    },
-	"suggest":
-    {
-
-    },
-    "require-dev":
-    {
+        "symfony/process": "~3.0",
+        "symfony/security-acl": "~3.0",
+        "symfony/security-core": "~3.0",
+		"symfonette/neon-integration": "^1.0@dev",
+		"nxsys/toolkits.parallax": "trunk"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+	"prefer-stable": true,
+	"repositories":
+	[
+		{
+            "type": "path",
+			"url": "C:\\dev\\projects\\onx\\onx.toolkits\\parallax",
+			"options": {"symlink":true }
+		}
+	]
 }

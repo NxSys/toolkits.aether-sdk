@@ -4,9 +4,8 @@ namespace NxSys\Toolkits\Aether\SDK\Core\Boot\Event;
 
 
 use SplQueue;
-use Threaded;
 
-class EventQueue extends Threaded
+class EventQueue
 {
 	/** @var Event[] $aQueue Event Queue */
 	public $aQueue;

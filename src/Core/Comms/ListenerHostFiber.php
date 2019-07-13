@@ -3,8 +3,10 @@
 namespace NxSys\Toolkits\Aether\SDK\Core\Comms;
 
 use NxSys\Toolkits\Aether\SDK\Core;
+use NxSys\Toolkits\Parallax;
 
-class ListenerHostFiber extends Core\Execution\Job\Fiber implements Core\Boot\Event\EventHandlerInterface
+
+class ListenerHostFiber extends Parallax\Job\Fiber implements Core\Boot\Event\EventHandlerInterface
 {
 	public $aThreadData=[];
 

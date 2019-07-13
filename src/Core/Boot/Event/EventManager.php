@@ -26,6 +26,7 @@ namespace NxSys\Toolkits\Aether\SDK\Core\Boot\Event;
 
 /** Local Project Dependencies **/
 use NxSys\Toolkits\Aether\SDK\Core;
+use NxSys\Toolkits\Parallax\Channel;
 
 /** Library Dependencies **/
 
@@ -35,12 +36,16 @@ use NxSys\Core\ExtensibleSystemClasses as CoreEsc;
 use Throwable;
 use NxSys\Toolkits\Aether\SDK\Core\Boot\Container;
 
+const EVENT_CHANNEL_ID = "Aether_Event_Channel";
+
 class EventManager
 {
+    const EVENT_CHANNEL_ID = EVENT_CHANNEL_ID;
+
     public function __construct()
     {
-        $this->oEventQueue = new EventQueue();
-        $this->oEventQueue->run();
+        //$this->oEventQueue = new EventQueue();
+        $this->oEventChannel = Channel::make(static::EVENT_CHANNEL_ID, 1024);
         $this->aChannels = [-1 => []];
 		$this->aEvents = [-1 => []];
 		$this->oLogger=Container::getDependency('sys.log');
@@ -84,13 +89,9 @@ class EventManager
     public function processEvent()
     {
 
-        if (!$this->oEventQueue->hasEvents())
-        {
-            return;
-        }
         // printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
         //Get next event to process (should remove from queue)
-        $oEvent = $this->oEventQueue->next();
+        $oEvent = $this->oEventChannel->recv();
 
         $aHandlerQueues = [	0 => [], //Event + Channel specified
                             1 => [], //Event specified, Channel wildcard
@@ -173,15 +174,12 @@ class EventManager
         }
     }
 
-    public function addEvent(Event $oEvent)
+    static function addEvent(Event $oEvent)
     {
         //Any thread handling code goes here.
         // var_dump("Add event", $oEvent);
-        $this->oEventQueue->add($oEvent);
-    }
+        $oEventChannel = Channel::open(static::EVENT_CHANNEL_ID);
 
-    public function getQueue() : EventQueue
-    {
-        return $this->oEventQueue;
+        $oEventChannel->send($oEvent);
     }
 }
