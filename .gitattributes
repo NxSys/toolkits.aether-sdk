@@ -9,6 +9,7 @@
 /build.xml -text
 /composer.json -text
 /masthead.txt -text
+/readthedocs.yaml -text
 res/main.txt -text
 /sonar-project.properties -text
 src-docs/Makefile -text
@@ -61,8 +62,6 @@ src/Core/Comms/IClient.php -text
 src/Core/Comms/IListener.php -text
 src/Core/Comms/ListenerFactory.php -text
 src/Core/Comms/ListenerHostFiber.php -text
-src/Core/Execution/IAgentModel.php -text
-src/Core/Execution/IException.php -text
 src/Core/ExecutionFrame.php -text
 src/Core/IException.php -text
 src/Core/Security/Integrity/BaseDecryptionStrategy.php -text
