@@ -45,5 +45,5 @@ interface IListener
 	function listenLoop();
 	function processEvents();
 	function setThreadContext(Core\Comms\ListenerHostFiber $oThread);
-	function getThreadContext(): Core\Comms\ListenerHostFiber;
+	function getThreadContext();//: Core\Comms\ListenerHostFiber;
 }

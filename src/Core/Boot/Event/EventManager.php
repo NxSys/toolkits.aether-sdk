@@ -1,4 +1,5 @@
 <?php
+
 /**
  * $BaseName$
  * $Id$
@@ -21,6 +22,7 @@
  * @version $Revision$
  */
 
+declare(strict_types=1);
 /** @namespace Native Namespace */
 namespace NxSys\Toolkits\Aether\SDK\Core\Boot\Event;
 
@@ -37,7 +39,6 @@ use Throwable;
 use NxSys\Toolkits\Aether\SDK\Core\Boot\Container;
 
 const EVENT_CHANNEL_ID = "Aether_Event_Channel";
-
 class EventManager
 {
     const EVENT_CHANNEL_ID = EVENT_CHANNEL_ID;
@@ -45,7 +46,7 @@ class EventManager
     public function __construct()
     {
         //$this->oEventQueue = new EventQueue();
-        $this->oEventChannel = Channel::make(static::EVENT_CHANNEL_ID, 1024);
+        $this->oEventChannel = Channel::make(static::EVENT_CHANNEL_ID, 1024000);
         $this->aChannels = [-1 => []];
 		$this->aEvents = [-1 => []];
 		$this->oLogger=Container::getDependency('sys.log');
@@ -92,6 +93,7 @@ class EventManager
         // printf(">>>CHECKPOINT %s::%s:%s<<<\n", __CLASS__, __FUNCTION__, __LINE__);
         //Get next event to process (should remove from queue)
         $oEvent = $this->oEventChannel->recv();
+        var_dump($oEvent);
 
         $aHandlerQueues = [	0 => [], //Event + Channel specified
                             1 => [], //Event specified, Channel wildcard
@@ -174,7 +176,7 @@ class EventManager
         }
     }
 
-    static function addEvent(Event $oEvent)
+    public static function addEvent(Event $oEvent)
     {
         //Any thread handling code goes here.
         // var_dump("Add event", $oEvent);

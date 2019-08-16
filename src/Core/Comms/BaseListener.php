@@ -41,7 +41,7 @@ use Threaded;
  * @throws NxSys\Toolkits\Aether\SDK\Core\Comms\CommsExceptionType Well, does it?
  * @author Chris R. Feamster <cfeamster@f2developments.com>
  */
-abstract class BaseListener extends Threaded implements IListener
+abstract class BaseListener implements IListener
 {
 	/**
 	 * @var Core\Execution\Job\Fiber
@@ -65,20 +65,20 @@ abstract class BaseListener extends Threaded implements IListener
 	{
 		// $this->hHandlerQueue=new SplObjectStorage;
 	}
-	
+
 	public function configure(string $sListen)
 	{
 		# code...
 	}
-	
+
 	abstract public function listenLoop(): void;
 
 	abstract public function processEvents(): void;
 
-	
+
 	public function registerNewHandler(Callable $hHandler)
 	{
-		$this->hHandlerQueue->attach($hHandler);
+		//$this->hHandlerQueue->attach($hHandler);
 	}
 
 	public function setThreadContext(Core\Comms\ListenerHostFiber $oThread)
@@ -86,7 +86,7 @@ abstract class BaseListener extends Threaded implements IListener
 		$this->oThreadContext = $oThread;
 	}
 
-	public function getThreadContext(): Core\Comms\ListenerHostFiber
+	public function getThreadContext()//: Core\Comms\ListenerHostFiber
 	{
 		return $this->oThreadContext;
 	}

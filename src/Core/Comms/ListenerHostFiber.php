@@ -4,6 +4,7 @@ namespace NxSys\Toolkits\Aether\SDK\Core\Comms;
 
 use NxSys\Toolkits\Aether\SDK\Core;
 use NxSys\Toolkits\Parallax;
+use NxSys\Toolkits\Aether\SDK\Core\Boot\Event\EventManager;
 
 
 class ListenerHostFiber extends Parallax\Job\Fiber implements Core\Boot\Event\EventHandlerInterface
@@ -21,13 +22,15 @@ class ListenerHostFiber extends Parallax\Job\Fiber implements Core\Boot\Event\Ev
 	public function work()
 	{
 		// echo "Doing work>>>>\n";
+
 		$this->oListener->listenLoop();
 		// echo "<<<<Done work";
 	}
 
 	public function onStartup()
 	{
-		require_once APP_AUTOLOADER_FILE;
+		$this->oListener->setThreadContext($this);
+		//require_once APP_AUTOLOADER_FILE;
 		//var_dump("Listener startup");
 	}
 
@@ -46,13 +49,8 @@ class ListenerHostFiber extends Parallax\Job\Fiber implements Core\Boot\Event\Ev
 
 	public function setListener(IListener $oListener)
 	{
+		//$oListener->setThreadContext($this);
 		$this->oListener=$oListener;
-		$this->oListener->setThreadContext($this);
-	}
-
-	public function setEventQueue(Core\Boot\Event\EventQueue $oEventQueue)
-	{
-		$this->oEventQueue=$oEventQueue;
 	}
 
 	public function handleEvent(Core\Boot\Event\Event $oEvent)
@@ -61,13 +59,9 @@ class ListenerHostFiber extends Parallax\Job\Fiber implements Core\Boot\Event\Ev
 		//var_dump($this->getThreadId());
 		//var_dump($oEvent->getEvent());
 
-		$this->pushIn(($oEvent));
+		//$this->pushIn(($oEvent));
 		//var_dump($this->oListener::$oThruwayHandler->aTerminals);
 		//$this->oListener->processEvents($this->oListener::$oThruwayHandler);
-	}
-	public function getInEvent()
-	{
-		return $this->shiftIn();
 	}
 
 	public function getChannels() : array
@@ -87,6 +81,6 @@ class ListenerHostFiber extends Parallax\Job\Fiber implements Core\Boot\Event\Ev
 
 	public function addEvent(Core\Boot\Event\Event $oEvent)
 	{
-		$this->oEventQueue->add($oEvent);
+		Core\Boot\Event\EventManager::addEvent($oEvent);
 	}
 }
